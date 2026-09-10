@@ -11,7 +11,7 @@
     <!-- CSS Esterno -->
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body style="background-color: #0b1120; color: #f8fafc; font-family: sans-serif; margin: 0;">
 
     <!-- SCHERMATA LOGIN -->
     <div id="login-section" class="login-wrapper">
@@ -54,68 +54,68 @@
     <!-- DASHBOARD GESTIONALE -->
     <div id="dashboard-section" style="display: none;">
         <header class="navbar">
-            <div class="logo-section">
-                <img src="assets/logo-polizia.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg'" alt="Logo Polizia" class="logo-img">
-                <span class="logo-title">POLIZIA DI STATO</span>
+            <div class="logo-section" style="display: flex; align-items: center; gap: 10px;">
+                <img src="assets/logo-polizia.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg'" alt="Logo Polizia" class="logo-img" style="height: 35px;">
+                <span class="logo-title" style="font-weight: bold; letter-spacing: 1px;">POLIZIA DI STATO</span>
             </div>
             <nav class="nav-links">
-                <a href="#" class="active">HOME</a>
+                <a href="#" class="active" id="navHome">HOME</a>
             </nav>
-            <div class="user-badge">
-                <i class="fa-solid fa-shield-halved"></i> MDC Operativo
+            <div class="user-badge" style="background: #1e293b; padding: 6px 14px; border-radius: 20px; border: 1px solid #334155; font-size: 0.85rem;">
+                <i class="fa-solid fa-shield-halved" style="color: #0284c7;"></i> MDC Operativo
             </div>
         </header>
 
-        <div class="top-banner">
+        <div class="top-banner" style="background: #0284c7; color: white; padding: 6px 20px; font-size: 0.85rem; display: flex; justify-content: space-between;">
             <span><i class="fa-solid fa-phone"></i> Emergenze: <strong>113</strong></span>
             <span><i class="fa-brands fa-discord"></i> Discord: <strong>Sito by Eric</strong></span>
         </div>
 
-        <main class="dashboard-container">
-            <div class="dashboard-header">
-                <div class="user-welcome">
-                    <i class="fa-solid fa-shield-halved logo-icon"></i>
+        <main class="dashboard-container" style="padding: 25px; max-width: 1200px; margin: 0 auto;">
+            <div class="dashboard-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <div class="user-welcome" style="display: flex; align-items: center; gap: 15px;">
+                    <i class="fa-solid fa-shield-halved logo-icon" style="font-size: 2.5rem; color: #0284c7;"></i>
                     <div>
-                        <h2>Area Personale</h2>
-                        <p><span id="dash-greeting">Buongiorno</span>, <strong id="dash-fullname">Agente</strong></p>
-                        <span class="status-badge off-duty"><i class="fa-solid fa-circle"></i> Fuori servizio</span>
+                        <h2 style="margin: 0; font-size: 1.5rem;">Area Personale</h2>
+                        <p style="margin: 3px 0; color: #94a3b8;"><span id="dash-greeting">Buongiorno</span>, <strong id="dash-fullname">Agente</strong></p>
+                        <span class="status-badge off-duty" id="statusBadgeMain" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #7f1d1d; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem;"><i class="fa-solid fa-circle" style="font-size: 0.6rem;"></i> Fuori servizio</span>
                     </div>
                 </div>
-                <div class="header-actions">
-                    <button class="btn btn-secondary" id="btnOpenChangePassword"><i class="fa-solid fa-key"></i> Cambia password</button>
-                    <button class="btn btn-outline" id="btnLogout"><i class="fa-solid fa-right-from-bracket"></i> Esci</button>
+                <div class="header-actions" style="display: flex; gap: 10px;">
+                    <button class="btn btn-secondary" id="btnOpenChangePassword" style="background: #1e293b; color: white; border: 1px solid #334155; padding: 10px 16px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-key"></i> Cambia password</button>
+                    <button class="btn btn-outline btnLogoutTrigger" style="background: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 10px 16px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-right-from-bracket"></i> Esci</button>
                 </div>
             </div>
 
-            <div class="dashboard-grid">
-                <aside class="profile-card">
-                    <div class="card-title">
-                        <i class="fa-solid fa-id-card"></i> I miei dati
-                        <small>Dati del tuo account (sola lettura).</small>
+            <div class="dashboard-grid" style="display: grid; grid-template-columns: 320px 1fr; gap: 20px;">
+                <aside class="profile-card" style="background: #0f172a; padding: 20px; border-radius: 12px; border: 1px solid #1e293b;">
+                    <div class="card-title" style="margin-bottom: 15px; border-bottom: 1px solid #1e293b; padding-bottom: 10px;">
+                        <i class="fa-solid fa-id-card" style="color: #0284c7;"></i> I miei dati
+                        <small style="display: block; color: #64748b;">Dati del tuo account (sola lettura).</small>
                     </div>
 
-                    <!-- AVATAR E MODIFICA FOTO -->
-                    <div class="avatar-container">
-                        <div class="avatar-wrapper" style="width: 180px; height: 180px; margin: 0 auto; position: relative;">
+                    <!-- AVATAR -->
+                    <div class="avatar-container" style="text-align: center;">
+                        <div class="avatar-wrapper" style="width: 150px; height: 150px; margin: 0 auto; position: relative;">
                             <img id="mieiDatiFoto" src="https://via.placeholder.com/180" alt="Foto Agente" class="avatar-img" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
-                            <button type="button" class="edit-avatar-btn" id="btnEditAvatar" title="Inserisci URL Imgur">
+                            <button type="button" class="edit-avatar-btn" id="btnEditAvatar" title="Cambia Immagine" style="position: absolute; bottom: 5px; right: 5px; background: #0284c7; color: white; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer;">
                                 <i class="fa-solid fa-pencil"></i>
                             </button>
                         </div>
 
                         <!-- REGOLAZIONE POSIZIONE FOTO -->
                         <div class="foto-controls" style="margin-top: 15px;">
-                            <button type="button" id="mieiDatiFotoPosToggle" class="btn-toggle-pos" style="background-color: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 8px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+                            <button type="button" id="mieiDatiFotoPosToggle" class="btn-toggle-pos" style="background-color: #1e293b; color: #38bdf8; border: 1px solid #0284c7; padding: 8px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%;">
                                 <i class="fa-solid fa-sliders"></i> Regola posizione foto
                             </button>
 
-                            <div id="mieiDatiFotoPosBox" class="foto-pos-box" style="display: none; background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 15px; margin-top: 10px; text-align: left;">
+                            <div id="mieiDatiFotoPosBox" class="foto-pos-box" style="display: none; background-color: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 15px; margin-top: 10px; text-align: left;">
                                 <div class="pos-control-group" style="margin-bottom: 10px;">
-                                    <label for="mieiDatiFotoPosX" style="font-size: 0.85rem; font-weight: 600; color: #0369a1;">Orizzontale (X):</label>
+                                    <label for="mieiDatiFotoPosX" style="font-size: 0.85rem; color: #94a3b8;">Orizzontale (X):</label>
                                     <input type="range" id="mieiDatiFotoPosX" min="0" max="100" value="50" style="width: 100%;">
                                 </div>
                                 <div class="pos-control-group" style="margin-bottom: 10px;">
-                                    <label for="mieiDatiFotoPosY" style="font-size: 0.85rem; font-weight: 600; color: #0369a1;">Verticale (Y):</label>
+                                    <label for="mieiDatiFotoPosY" style="font-size: 0.85rem; color: #94a3b8;">Verticale (Y):</label>
                                     <input type="range" id="mieiDatiFotoPosY" min="0" max="100" value="30" style="width: 100%;">
                                 </div>
                                 <button type="button" id="btnResetPosFoto" class="btn-reset-pos" style="background-color: #0284c7; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; width: 100%;">
@@ -124,64 +124,41 @@
                             </div>
                         </div>
 
-                        <h3 id="dash-card-name" style="margin-top: 15px;">Agente</h3>
-                        <p id="dash-card-grado-sub" style="color: #64748b; font-size: 0.85rem;">Grado</p>
-                        <div class="badge-matricola">MATRICOLA: <strong id="dash-matricola">PDS-000</strong></div>
+                        <h3 id="dash-card-name" style="margin-top: 15px; margin-bottom: 5px;">Agente</h3>
+                        <p id="dash-card-grado-sub" style="color: #64748b; font-size: 0.85rem; margin: 0;">Grado</p>
+                        <div class="badge-matricola" style="margin-top: 8px; background: #1e293b; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; display: inline-block;">MATRICOLA: <strong id="dash-matricola" style="color: #38bdf8;">PDS-000</strong></div>
                     </div>
 
-                    <div class="profile-fields">
-                        <div class="field-group">
-                            <label for="dash-username">Username</label>
-                            <input type="text" id="dash-username" readonly>
-                        </div>
-                        <div class="field-group">
-                            <label for="dash-nome">Nome</label>
-                            <input type="text" id="dash-nome" readonly>
-                        </div>
-                        <div class="field-group">
-                            <label for="dash-cognome">Cognome</label>
-                            <input type="text" id="dash-cognome" readonly>
-                        </div>
-                        <div class="field-group">
-                            <label for="dash-discord">Discord ID</label>
-                            <input type="text" id="dash-discord" readonly>
-                        </div>
-                        <div class="field-group">
-                            <label for="dash-grado">Grado</label>
-                            <input type="text" id="dash-grado" readonly>
-                        </div>
-                        <div class="field-group">
-                            <label for="dash-mansione">Mansione</label>
-                            <input type="text" id="dash-mansione" readonly>
-                        </div>
-                        <div class="field-group">
-                            <label>Specializzazioni</label>
-                            <div>
-                                <span class="tag" id="dash-spec"><i class="fa-solid fa-shield"></i> Squadra Volante</span>
-                            </div>
-                        </div>
+                    <div class="profile-fields" style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                        <div class="field-group"><label style="font-size: 0.75rem; color: #64748b;">Username</label><input type="text" id="dash-username" readonly style="width: 100%; background: #1e293b; border: 1px solid #334155; color: #f8fafc; padding: 6px 10px; border-radius: 6px;"></div>
+                        <div class="field-group"><label style="font-size: 0.75rem; color: #64748b;">Nome</label><input type="text" id="dash-nome" readonly style="width: 100%; background: #1e293b; border: 1px solid #334155; color: #f8fafc; padding: 6px 10px; border-radius: 6px;"></div>
+                        <div class="field-group"><label style="font-size: 0.75rem; color: #64748b;">Cognome</label><input type="text" id="dash-cognome" readonly style="width: 100%; background: #1e293b; border: 1px solid #334155; color: #f8fafc; padding: 6px 10px; border-radius: 6px;"></div>
+                        <div class="field-group"><label style="font-size: 0.75rem; color: #64748b;">Discord ID</label><input type="text" id="dash-discord" readonly style="width: 100%; background: #1e293b; border: 1px solid #334155; color: #f8fafc; padding: 6px 10px; border-radius: 6px;"></div>
+                        <div class="field-group"><label style="font-size: 0.75rem; color: #64748b;">Grado</label><input type="text" id="dash-grado" readonly style="width: 100%; background: #1e293b; border: 1px solid #334155; color: #f8fafc; padding: 6px 10px; border-radius: 6px;"></div>
+                        <div class="field-group"><label style="font-size: 0.75rem; color: #64748b;">Mansione</label><input type="text" id="dash-mansione" readonly style="width: 100%; background: #1e293b; border: 1px solid #334155; color: #f8fafc; padding: 6px 10px; border-radius: 6px;"></div>
                     </div>
                 </aside>
 
-                <section class="main-content">
-                    <div class="status-box">
+                <section class="main-content" style="display: flex; flex-direction: column; gap: 20px;">
+                    <div class="status-box" style="background: #0f172a; padding: 20px; border-radius: 12px; border: 1px solid #1e293b; display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <strong id="dash-status-grado">Grado</strong><br>
-                            <span style="font-size: 0.8rem; color: #64748b;" id="dash-status-user">Nome Cognome - @User</span>
+                            <strong id="dash-status-grado" style="font-size: 1.1rem; color: #38bdf8;">Grado</strong><br>
+                            <span style="font-size: 0.85rem; color: #94a3b8;" id="dash-status-user">Nome Cognome - @User</span>
                         </div>
-                        <button class="btn btn-primary" id="btnUpdateProfile"><i class="fa-solid fa-rotate" id="iconUpdateProfile"></i> Aggiorna profilo / grado</button>
+                        <button class="btn btn-primary" id="btnUpdateProfile" style="background: #0284c7; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-rotate" id="iconUpdateProfile"></i> Aggiorna profilo / grado</button>
                     </div>
 
-                    <div class="modules-grid">
-                        <div class="module-card">
-                            <i class="fa-regular fa-clock module-icon"></i>
-                            <h4>Timbra Cartellino</h4>
-                            <p>Avvia/termina turno e registra le ore</p>
+                    <div class="modules-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                        <!-- APRE SEZIONE TIMBRA CARTELLINO -->
+                        <div class="module-card" id="btnOpenCartellino" style="background: #0f172a; border: 1px solid #1e293b; padding: 25px; border-radius: 12px; cursor: pointer; transition: 0.2s;">
+                            <i class="fa-regular fa-clock module-icon" style="font-size: 2.2rem; color: #0284c7; margin-bottom: 12px; display: block;"></i>
+                            <h4 style="margin: 0 0 8px 0; font-size: 1.2rem;">Timbra Cartellino</h4>
+                            <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">Avvia/termina turno operativo e registra le ore di servizio</p>
                         </div>
-                        <div class="module-card">
-                            <i class="fa-solid fa-id-card-clip module-icon"></i>
-                            <h4>Porto d'Armi & Licenze</h4>
-                            <p>Verifica e rilascio licenze armi</p>
+                        <div class="module-card" style="background: #0f172a; border: 1px solid #1e293b; padding: 25px; border-radius: 12px; opacity: 0.7;">
+                            <i class="fa-solid fa-id-card-clip module-icon" style="font-size: 2.2rem; color: #0284c7; margin-bottom: 12px; display: block;"></i>
+                            <h4 style="margin: 0 0 8px 0; font-size: 1.2rem;">Porto d'Armi & Licenze</h4>
+                            <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">Verifica e rilascio licenze armi e brevetti</p>
                         </div>
                     </div>
                 </section>
@@ -189,49 +166,131 @@
         </main>
     </div>
 
+    <!-- SEZIONE TIMBRA CARTELLINO (INTEGRATA COME NELLO SCREENSHOT) -->
+    <div id="cartellino-section" style="display: none; min-height: 100vh; background-color: #0b1120;">
+        <header class="navbar" style="background: #0f172a; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b;">
+            <div class="logo-section" style="display: flex; align-items: center; gap: 12px;">
+                <img src="assets/logo-polizia.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg'" alt="Logo Polizia" style="height: 38px;">
+                <span class="logo-title" style="font-weight: bold; letter-spacing: 1.5px; font-size: 1.1rem;">POLIZIA DI STATO</span>
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <button class="btn" id="btnBackToDashboard" style="background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+                <button class="btn btnLogoutTrigger" style="background: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;"><i class="fa-solid fa-right-from-bracket"></i> Esci</button>
+            </div>
+        </header>
+
+        <div style="max-width: 1100px; margin: 30px auto; padding: 0 20px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 25px;">
+                <img src="assets/logo-polizia.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg'" alt="Logo" style="height: 32px;">
+                <h2 style="margin: 0; font-size: 1.8rem; font-weight: 700;">Timbra Cartellino</h2>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: start;">
+                <!-- COLONNA SINISTRA: CONTROLLI E STATISTICHE -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    
+                    <!-- INFO OPERATORE -->
+                    <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 20px;">
+                        <label style="display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 8px; font-weight: 600;">Nome operatore *</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px;">
+                            <input type="text" id="cartellinoOpNome" readonly value="Agente" style="background: #1e293b; border: 1px solid #334155; color: #f8fafc; padding: 10px 14px; border-radius: 6px; font-size: 0.95rem;">
+                            <input type="text" id="cartellinoOpMatricola" readonly value="PDS-000" style="background: #1e293b; border: 1px solid #334155; color: #f8fafc; padding: 10px 14px; border-radius: 6px; font-size: 0.95rem;">
+                            <button id="btnSalvaNoteOp" style="background: #1e293b; color: #38bdf8; border: 1px solid #0284c7; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer;">Salva</button>
+                        </div>
+                    </div>
+
+                    <!-- CRONOMETRO E AZIONI -->
+                    <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 35px 20px; text-align: center;">
+                        <div id="cartellinoStatusText" style="display: inline-block; background: #1e293b; color: #94a3b8; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 15px;">Nessun turno attivo</div>
+                        
+                        <div id="cartellinoTimer" style="font-size: 3.8rem; font-weight: 800; letter-spacing: 2px; color: #ffffff; margin-bottom: 8px; font-family: monospace;">00:00:00</div>
+                        <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 25px;">Premi Avvia per iniziare il servizio operativo</p>
+
+                        <div style="display: flex; justify-content: center; gap: 15px;">
+                            <button id="btnStartTurno" style="background: #16a34a; color: white; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 1rem;"><i class="fa-solid fa-play"></i> Avvia turno</button>
+                            <button id="btnStopTurno" disabled style="background: #dc2626; color: white; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; cursor: opacity: 0.5; cursor: not-allowed; display: flex; align-items: center; gap: 8px; font-size: 1rem;"><i class="fa-solid fa-stop"></i> Termina turno</button>
+                        </div>
+                    </div>
+
+                    <!-- CARD ORE E STATISTICHE -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                        <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 20px; text-align: center;">
+                            <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 8px;">Ore settimana</span>
+                            <span id="statOreSettimana" style="font-size: 1.5rem; font-weight: 800; color: #22c55e;">0h 0m</span>
+                        </div>
+                        <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 20px; text-align: center;">
+                            <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 8px;">Ore totali</span>
+                            <span id="statOreTotali" style="font-size: 1.5rem; font-weight: 800; color: #38bdf8;">0h 0m</span>
+                        </div>
+                        <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 20px; text-align: center;">
+                            <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 8px;">Turni sett.</span>
+                            <span id="statTurniSettimana" style="font-size: 1.5rem; font-weight: 800; color: #ef4444;">0</span>
+                        </div>
+                    </div>
+
+                    <!-- STORICO TURNI -->
+                    <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 20px;">
+                        <h4 style="margin: 0 0 12px 0; color: #ef4444; font-size: 1rem;">Storico Turni</h4>
+                        <div id="storicoTurniList" style="color: #64748b; font-size: 0.9rem;">
+                            Nessun turno registrato.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLONNA DESTRO: AGENTI IN SERVIZIO -->
+                <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 20px;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: #22c55e; font-weight: 700; font-size: 1rem;">
+                        <i class="fa-solid fa-user-group"></i> In servizio
+                    </div>
+                    <p style="font-size: 0.75rem; color: #64748b; margin: 0 0 15px 0;">Turni aperti - aggiornamento live</p>
+                    <div id="countInServizio" style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 15px;">0 operatori in servizio</div>
+
+                    <div id="listaAgentiInServizio" style="display: flex; flex-direction: column; gap: 10px;">
+                        <!-- Gli agenti in turno appariranno qui dinamicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODALE CAMBIA PASSWORD -->
-    <div id="modalChangePassword" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: center;">
-        <div class="modal-card" style="background: #0f172a; color: #f8fafc; padding: 35px; border-radius: 12px; max-width: 480px; width: 92%; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5); border: 1px solid #1e293b;">
+    <div id="modalChangePassword" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: center;">
+        <div class="modal-card" style="background: #0f172a; color: #f8fafc; padding: 35px; border-radius: 12px; max-width: 480px; width: 92%; border: 1px solid #1e293b;">
             <h3 style="margin-bottom: 20px; color: #f8fafc; font-size: 1.4rem; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #1e293b; padding-bottom: 15px;">
                 <i class="fa-solid fa-key" style="color: #0284c7;"></i> Cambia Password
             </h3>
-            
             <div id="pwd-error" class="error-message" style="display: none; background: rgba(220, 38, 38, 0.15); color: #fca5a5; border: 1px solid #7f1d1d; padding: 12px; border-radius: 8px; font-size: 0.95rem; margin-bottom: 20px;"></div>
             <div id="pwd-success" class="success-message" style="display: none; background: rgba(22, 163, 74, 0.15); color: #86efac; border: 1px solid #14532d; padding: 12px; border-radius: 8px; font-size: 0.95rem; margin-bottom: 20px;"></div>
-            
             <form id="formChangePassword">
-                <div class="input-group" style="margin-bottom: 18px;">
-                    <label for="oldPassword" style="display: block; font-size: 0.95rem; margin-bottom: 8px; color: #94a3b8; font-weight: 500;">Password Attuale</label>
-                    <input type="password" id="oldPassword" required style="width: 100%; padding: 12px 14px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 1rem; outline: none;">
-                </div>
-                <div class="input-group" style="margin-bottom: 18px;">
-                    <label for="newPassword" style="display: block; font-size: 0.95rem; margin-bottom: 8px; color: #94a3b8; font-weight: 500;">Nuova Password</label>
-                    <input type="password" id="newPassword" required style="width: 100%; padding: 12px 14px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 1rem; outline: none;">
-                </div>
-                <div class="input-group" style="margin-bottom: 25px;">
-                    <label for="confirmNewPassword" style="display: block; font-size: 0.95rem; margin-bottom: 8px; color: #94a3b8; font-weight: 500;">Conferma Nuova Password</label>
-                    <input type="password" id="confirmNewPassword" required style="width: 100%; padding: 12px 14px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 1rem; outline: none;">
-                </div>
-                <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 10px;">
-                    <button type="button" class="btn" id="btnClosePwdModal" style="padding: 10px 20px; font-size: 0.95rem; background: transparent; color: #94a3b8; border: 1px solid #334155; border-radius: 8px; cursor: pointer; font-weight: 600;">Annulla</button>
-                    <button type="submit" class="btn" style="padding: 10px 22px; font-size: 0.95rem; background: #0284c7; color: #ffffff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Salva Password</button>
+                <div style="margin-bottom: 18px;"><label style="display: block; font-size: 0.95rem; margin-bottom: 8px; color: #94a3b8;">Password Attuale</label><input type="password" id="oldPassword" required style="width: 100%; padding: 12px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #fff;"></div>
+                <div style="margin-bottom: 18px;"><label style="display: block; font-size: 0.95rem; margin-bottom: 8px; color: #94a3b8;">Nuova Password</label><input type="password" id="newPassword" required style="width: 100%; padding: 12px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #fff;"></div>
+                <div style="margin-bottom: 25px;"><label style="display: block; font-size: 0.95rem; margin-bottom: 8px; color: #94a3b8;">Conferma Nuova Password</label><input type="password" id="confirmNewPassword" required style="width: 100%; padding: 12px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #fff;"></div>
+                <div style="display: flex; justify-content: flex-end; gap: 12px;">
+                    <button type="button" id="btnClosePwdModal" style="padding: 10px 20px; background: transparent; color: #94a3b8; border: 1px solid #334155; border-radius: 8px; cursor: pointer;">Annulla</button>
+                    <button type="submit" style="padding: 10px 22px; background: #0284c7; color: #ffffff; border: none; border-radius: 8px; cursor: pointer;">Salva Password</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- MODALE CONFERMA ESCI -->
-    <div id="modalLogout" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: center;">
-        <div class="modal-card" style="background: #0f172a; color: #f8fafc; padding: 35px; border-radius: 12px; max-width: 440px; width: 92%; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5); border: 1px solid #1e293b;">
-            <div style="font-size: 3rem; color: #ef4444; margin-bottom: 15px;">
-                <i class="fa-solid fa-right-from-bracket"></i>
-            </div>
+    <div id="modalLogout" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: center;">
+        <div class="modal-card" style="background: #0f172a; color: #f8fafc; padding: 35px; border-radius: 12px; max-width: 440px; width: 92%; text-align: center; border: 1px solid #1e293b;">
+            <div style="font-size: 3rem; color: #ef4444; margin-bottom: 15px;"><i class="fa-solid fa-right-from-bracket"></i></div>
             <h3 style="margin-bottom: 12px; color: #f8fafc; font-size: 1.4rem;">Conferma Uscita</h3>
-            <p style="font-size: 1rem; color: #94a3b8; margin-bottom: 25px; line-height: 1.5;">Sei sicuro di voler effettuare il logout dal Portale MDC?</p>
+            <p style="font-size: 1rem; color: #94a3b8; margin-bottom: 25px;">Sei sicuro di voler effettuare il logout dal Portale MDC?</p>
             <div style="display: flex; justify-content: center; gap: 14px;">
-                <button class="btn" id="btnCancelLogout" style="padding: 11px 22px; font-size: 0.95rem; background: transparent; color: #94a3b8; border: 1px solid #334155; border-radius: 8px; cursor: pointer; font-weight: 600;">Annulla</button>
-                <button class="btn" id="btnConfirmLogout" style="padding: 11px 26px; font-size: 0.95rem; background-color: #dc2626; color: #ffffff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Esci</button>
+                <button id="btnCancelLogout" style="padding: 11px 22px; background: transparent; color: #94a3b8; border: 1px solid #334155; border-radius: 8px; cursor: pointer;">Annulla</button>
+                <button id="btnConfirmLogout" style="padding: 11px 26px; background-color: #dc2626; color: #ffffff; border: none; border-radius: 8px; cursor: pointer;">Esci</button>
             </div>
+        </div>
+    </div>
+
+    <!-- OVERLAY CARICAMENTO -->
+    <div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; color: white;">
+        <div style="text-align: center;">
+            <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 10px;"></i>
+            <p>Elaborazione in corso...</p>
         </div>
     </div>
 
