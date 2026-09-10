@@ -35,25 +35,43 @@ const agentiDatabase = [
     }
 ];
 
-// EVENTO DI ACCESS COMPILANDO IL FORM DI LOGIN
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const userInput = document.getElementById('username').value.trim();
-    const passInput = document.getElementById('password').value.trim();
-    const errorBox = document.getElementById('login-error');
+// ESEGUE IL CODICE SOLO QUANDO LA PAGINA È COMPLETAMENTE CARICATA
+document.addEventListener('DOMContentLoaded', function() {
 
-    // Cerca l'agente inserito
-    const agenteTrovato = agentiDatabase.find(agente => 
-        agente.username.toLowerCase() === userInput.toLowerCase() && agente.password === passInput
-    );
+    const loginForm = document.getElementById('loginForm');
+    const btnLogout = document.getElementById('btnLogout');
 
-    if (agenteTrovato) {
-        errorBox.style.display = 'none';
-        caricaDashboard(agenteTrovato);
-    } else {
-        errorBox.style.display = 'block';
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userInput = document.getElementById('username').value.trim();
+            const passInput = document.getElementById('password').value.trim();
+            const errorBox = document.getElementById('login-error');
+
+            // Cerca l'agente (confronto non sensibile alle maiuscole/minuscole per comodità)
+            const agenteTrovato = agentiDatabase.find(agente => 
+                agente.username.toLowerCase() === userInput.toLowerCase() && 
+                agente.password.toLowerCase() === passInput.toLowerCase()
+            );
+
+            if (agenteTrovato) {
+                if (errorBox) errorBox.style.display = 'none';
+                caricaDashboard(agenteTrovato);
+            } else {
+                if (errorBox) errorBox.style.display = 'block';
+            }
+        });
     }
+
+    if (btnLogout) {
+        btnLogout.addEventListener('click', function() {
+            document.getElementById('dashboard-section').style.display = 'none';
+            document.getElementById('login-section').style.display = 'flex';
+            if (loginForm) loginForm.reset();
+        });
+    }
+
 });
 
 // POPOLA I DATI DELLA DASHBOARD CON L'UTENTE AUTENTICATO
@@ -81,10 +99,3 @@ function caricaDashboard(agente) {
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('dashboard-section').style.display = 'block';
 }
-
-// LOGOUT
-document.getElementById('btnLogout').addEventListener('click', function() {
-    document.getElementById('dashboard-section').style.display = 'none';
-    document.getElementById('login-section').style.display = 'flex';
-    document.getElementById('loginForm').reset();
-});
