@@ -35,12 +35,26 @@ const agentiDatabase = [
     }
 ];
 
-// ESEGUE IL CODICE SOLO QUANDO LA PAGINA È COMPLETAMENTE CARICATA
 document.addEventListener('DOMContentLoaded', function() {
 
     const loginForm = document.getElementById('loginForm');
     const btnLogout = document.getElementById('btnLogout');
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
 
+    // MOSTRA / NASCONDI PASSWORD CON L'OCCHIO
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', function() {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+            
+            // Cambia l'icona dell'occhio (aperto/chiuso)
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    }
+
+    // GESTIONE ACCESSING FORM LOGIN
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -64,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // LOGOUT
     if (btnLogout) {
         btnLogout.addEventListener('click', function() {
             document.getElementById('dashboard-section').style.display = 'none';
@@ -92,7 +107,7 @@ function caricaDashboard(agente) {
     document.getElementById('dash-status-grado').innerText = agente.grado;
     document.getElementById('dash-status-user').innerText = `${agente.nome} ${agente.cognome} - @${agente.username}`;
     
-    // Generatore Avatar basato sui dati dell'agente
+    // Generatore Avatar
     document.getElementById('dash-avatar').src = `https://ui-avatars.com/api/?name=${agente.nome}+${agente.cognome}&background=0284c7&color=fff&size=128`;
 
     // Cambio schermata
