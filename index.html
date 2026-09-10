@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -8,16 +8,10 @@
     <!-- FontAwesome per le icone -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Collegamento al file CSS esterno -->
+    <!-- CSS Esterno -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-    <!-- OVERLAY DI CARICAMENTO (SPINNER) -->
-    <div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.75); z-index: 2000; justify-content: center; align-items: center; color: white; flex-direction: column; backdrop-filter: blur(4px);">
-        <i class="fa-solid fa-spinner fa-spin fa-3x" style="margin-bottom: 15px; color: #38bdf8;"></i>
-        <p style="font-weight: 600; font-family: sans-serif;">Elaborazione e compressione immagine...</p>
-    </div>
 
     <!-- SCHERMATA LOGIN -->
     <div id="login-section" class="login-wrapper">
@@ -100,16 +94,16 @@
                         <small>Dati del tuo account (sola lettura).</small>
                     </div>
 
-                    <!-- AVATAR E CARICAMENTO FOTO -->
+                    <!-- AVATAR E MODIFICA FOTO -->
                     <div class="avatar-container">
                         <div class="avatar-wrapper" style="width: 180px; height: 180px; margin: 0 auto; position: relative;">
                             <img id="mieiDatiFoto" src="https://via.placeholder.com/180" alt="Foto Agente" class="avatar-img" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
-                            <button type="button" class="edit-avatar-btn" id="btnEditAvatar" title="Carica nuova foto profilo dal PC">
-                                <i class="fa-solid fa-camera"></i>
+                            <button type="button" class="edit-avatar-btn" id="btnEditAvatar" title="Inserisci URL Imgur">
+                                <i class="fa-solid fa-pencil"></i>
                             </button>
                         </div>
 
-                        <!-- REGOLAZIONE POSIZIONE FOTO (ASSE X e Y) -->
+                        <!-- REGOLAZIONE POSIZIONE FOTO -->
                         <div class="foto-controls" style="margin-top: 15px;">
                             <button type="button" id="mieiDatiFotoPosToggle" class="btn-toggle-pos" style="background-color: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 8px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
                                 <i class="fa-solid fa-sliders"></i> Regola posizione foto
@@ -239,7 +233,7 @@
         </div>
     </div>
 
-    <!-- Collegamento al file JavaScript esterno -->
+    <!-- Script JS -->
     <script src="js/script.js"></script>
 </body>
 </html>
