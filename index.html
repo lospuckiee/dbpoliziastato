@@ -19,7 +19,7 @@
             <div class="login-header">
                 <img src="assets/logo-polizia.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg'" alt="Logo Polizia">
                 <h1>POLIZIA DI STATO</h1>
-                <p>Accesso Riservato Portale Polizia di Stato IPRP</p>
+                <p>Accesso Riservato Portale MDC</p>
             </div>
 
             <div id="login-error" class="error-message" style="display: none;">
@@ -94,16 +94,16 @@
                         <small>Dati del tuo account (sola lettura).</small>
                     </div>
 
-                    <!-- AVATAR E CONTROLLI MODIFICA FOTO -->
+                    <!-- AVATAR E MODIFICA FOTO -->
                     <div class="avatar-container">
                         <div class="avatar-wrapper">
                             <img id="mieiDatiFoto" src="https://via.placeholder.com/150" alt="Foto Agente" class="avatar-img">
-                            <button type="button" class="edit-avatar-btn" onclick="mieiDatiModificaFoto()" title="Modifica URL Foto">
+                            <button type="button" class="edit-avatar-btn" id="btnEditAvatar" onclick="mieiDatiModificaFoto()" title="Modifica URL Foto">
                                 <i class="fa-solid fa-pencil"></i>
                             </button>
                         </div>
 
-                        <!-- PANNELLO REGOLAZIONE POSIZIONE FOTO -->
+                        <!-- REGOLAZIONE POSIZIONE FOTO (ASSE X e Y) -->
                         <div class="foto-controls">
                             <button type="button" id="mieiDatiFotoPosToggle" class="btn-toggle-pos" onclick="mieiDatiTogglePosFoto()">
                                 <i class="fa-solid fa-sliders"></i> Regola posizione foto
