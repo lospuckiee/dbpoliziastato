@@ -35,6 +35,8 @@ const agentiDatabase = [
     }
 ];
 
+let utenteCorrente = null;
+
 document.addEventListener('DOMContentLoaded', function() {
 
     const loginForm = document.getElementById('loginForm');
@@ -42,13 +44,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('password');
 
+    // Modale Cambia Password
+    const btnOpenChangePassword = document.getElementById('btnOpenChangePassword');
+    const modalChangePassword = document.getElementById('modalChangePassword');
+    const btnClosePwdModal = document.getElementById('btnClosePwdModal');
+    const formChangePassword = document.getElementById('formChangePassword');
+
+    // Modale Logout
+    const modalLogout = document.getElementById('modalLogout');
+    const btnCancelLogout = document.getElementById('btnCancelLogout');
+    const btnConfirmLogout = document.getElementById('btnConfirmLogout');
+
+    // Tasto Aggiorna Profilo
+    const btnUpdateProfile = document.getElementById('btnUpdateProfile');
+
     // MOSTRA / NASCONDI PASSWORD CON L'OCCHIO
     if (togglePassword && passwordInput) {
         togglePassword.addEventListener('click', function() {
             const isPassword = passwordInput.getAttribute('type') === 'password';
             passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-            
-            // Cambia l'icona dell'occhio (aperto/chiuso)
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
         });
@@ -63,14 +77,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const passInput = document.getElementById('password').value.trim();
             const errorBox = document.getElementById('login-error');
 
-            // Cerca l'agente (confronto non sensibile alle maiuscole/minuscole)
             const agenteTrovato = agentiDatabase.find(agente => 
                 agente.username.toLowerCase() === userInput.toLowerCase() && 
-                agente.password.toLowerCase() === passInput.toLowerCase()
+                agente.password === passInput
             );
 
             if (agenteTrovato) {
                 if (errorBox) errorBox.style.display = 'none';
+                utenteCorrente = agenteTrovato;
                 caricaDashboard(agenteTrovato);
             } else {
                 if (errorBox) errorBox.style.display = 'block';
@@ -78,12 +92,93 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // LOGOUT
+    // MODALE ESCI (LOGOUT)
     if (btnLogout) {
         btnLogout.addEventListener('click', function() {
+            modalLogout.style.display = 'flex';
+        });
+    }
+
+    if (btnCancelLogout) {
+        btnCancelLogout.addEventListener('click', function() {
+            modalLogout.style.display = 'none';
+        });
+    }
+
+    if (btnConfirmLogout) {
+        btnConfirmLogout.addEventListener('click', function() {
+            modalLogout.style.display = 'none';
             document.getElementById('dashboard-section').style.display = 'none';
             document.getElementById('login-section').style.display = 'flex';
+            utenteCorrente = null;
             if (loginForm) loginForm.reset();
+        });
+    }
+
+    // MODALE CAMBIA PASSWORD
+    if (btnOpenChangePassword) {
+        btnOpenChangePassword.addEventListener('click', function() {
+            document.getElementById('pwd-error').style.display = 'none';
+            document.getElementById('pwd-success').style.display = 'none';
+            formChangePassword.reset();
+            modalChangePassword.style.display = 'flex';
+        });
+    }
+
+    if (btnClosePwdModal) {
+        btnClosePwdModal.addEventListener('click', function() {
+            modalChangePassword.style.display = 'none';
+        });
+    }
+
+    if (formChangePassword) {
+        formChangePassword.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const oldPwd = document.getElementById('oldPassword').value;
+            const newPwd = document.getElementById('newPassword').value;
+            const confirmPwd = document.getElementById('confirmNewPassword').value;
+
+            const errorBox = document.getElementById('pwd-error');
+            const successBox = document.getElementById('pwd-success');
+
+            errorBox.style.display = 'none';
+            successBox.style.display = 'none';
+
+            if (oldPwd !== utenteCorrente.password) {
+                errorBox.innerText = 'La password attuale inserita non è corretta.';
+                errorBox.style.display = 'block';
+                return;
+            }
+
+            if (newPwd !== confirmPwd) {
+                errorBox.innerText = 'Le nuove password non corrispondono.';
+                errorBox.style.display = 'block';
+                return;
+            }
+
+            // Aggiorna la password nell'oggetto utente corrente e nel DB
+            utenteCorrente.password = newPwd;
+            successBox.innerText = 'Password aggiornata con successo!';
+            successBox.style.display = 'block';
+
+            setTimeout(() => {
+                modalChangePassword.style.display = 'none';
+            }, 1200);
+        });
+    }
+
+    // BOTTONE AGGIORNA PROFILO / GRADO
+    if (btnUpdateProfile) {
+        btnUpdateProfile.addEventListener('click', function() {
+            const icon = document.getElementById('iconUpdateProfile');
+            if (icon) icon.classList.add('fa-spin');
+            
+            setTimeout(() => {
+                if (icon) icon.classList.remove('fa-spin');
+                if (utenteCorrente) {
+                    caricaDashboard(utenteCorrente);
+                }
+            }, 600);
         });
     }
 
@@ -107,10 +202,10 @@ function caricaDashboard(agente) {
     document.getElementById('dash-status-grado').innerText = agente.grado;
     document.getElementById('dash-status-user').innerText = `${agente.nome} ${agente.cognome} - @${agente.username}`;
     
-    // Generatore Avatar (Sistemato l'ID per farlo funzionare con l'HTML)
+    // Avatar
     const fotoEl = document.getElementById('mieiDatiFoto');
     if (fotoEl) {
-        fotoEl.src = `https://ui-avatars.com/api/?name=${agente.nome}+${agente.cognome}&background=0284c7&color=fff&size=128`;
+        fotoEl.src = `https://ui-avatars.com/api/?name=${agente.nome}+${agente.cognome}&background=0284c7&color=fff&size=180`;
     }
 
     // Cambio schermata
@@ -122,7 +217,6 @@ function caricaDashboard(agente) {
 // FUNZIONI PER LA GESTIONE E REGOLAZIONE DELLA FOTO
 // ----------------------------------------------------
 
-// 1. Modifica URL della Foto con la Matita
 function mieiDatiModificaFoto() {
     const nuovaUrl = prompt("Inserisci l'URL dell'immagine del tuo profilo:");
     if (nuovaUrl && nuovaUrl.trim() !== "") {
@@ -133,7 +227,6 @@ function mieiDatiModificaFoto() {
     }
 }
 
-// 2. Mostra/Nascondi il pannello degli slider
 function mieiDatiTogglePosFoto() {
     const box = document.getElementById('mieiDatiFotoPosBox');
     if (box) {
@@ -141,7 +234,6 @@ function mieiDatiTogglePosFoto() {
     }
 }
 
-// 3. Applica la posizione orizzontale e verticale alla foto
 function mieiDatiApplicaPosFoto() {
     const posX = document.getElementById('mieiDatiFotoPosX').value;
     const posY = document.getElementById('mieiDatiFotoPosY').value;
@@ -153,7 +245,6 @@ function mieiDatiApplicaPosFoto() {
     }
 }
 
-// 4. Ripristina la posizione della foto ai valori di default
 function mieiDatiResetPosFoto() {
     document.getElementById('mieiDatiFotoPosX').value = 50;
     document.getElementById('mieiDatiFotoPosY').value = 30;
