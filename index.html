@@ -13,6 +13,12 @@
 </head>
 <body>
 
+    <!-- OVERLAY DI CARICAMENTO (SPINNER) -->
+    <div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.75); z-index: 2000; justify-content: center; align-items: center; color: white; flex-direction: column; backdrop-filter: blur(4px);">
+        <i class="fa-solid fa-spinner fa-spin fa-3x" style="margin-bottom: 15px; color: #38bdf8;"></i>
+        <p style="font-weight: 600; font-family: sans-serif;">Elaborazione e compressione immagine...</p>
+    </div>
+
     <!-- SCHERMATA LOGIN -->
     <div id="login-section" class="login-wrapper">
         <div class="login-card">
@@ -94,12 +100,12 @@
                         <small>Dati del tuo account (sola lettura).</small>
                     </div>
 
-                    <!-- AVATAR E MODIFICA FOTO -->
+                    <!-- AVATAR E CARICAMENTO FOTO -->
                     <div class="avatar-container">
                         <div class="avatar-wrapper" style="width: 180px; height: 180px; margin: 0 auto; position: relative;">
                             <img id="mieiDatiFoto" src="https://via.placeholder.com/180" alt="Foto Agente" class="avatar-img" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
-                            <button type="button" class="edit-avatar-btn" id="btnEditAvatar" title="Modifica URL Foto">
-                                <i class="fa-solid fa-pencil"></i>
+                            <button type="button" class="edit-avatar-btn" id="btnEditAvatar" title="Carica nuova foto profilo dal PC">
+                                <i class="fa-solid fa-camera"></i>
                             </button>
                         </div>
 
