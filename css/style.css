@@ -66,17 +66,24 @@ body {
     font-weight: 600;
 }
 
+/* ALLINAMENTO INPUT E ICONE CORRETTO */
 .input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.input-wrapper i {
+/* Icona lucchetto e utente a SINISTRA */
+.input-wrapper > i:first-child,
+.input-wrapper .icon-left {
     position: absolute;
     left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
     color: #64748b;
     font-size: 0.9rem;
+    pointer-events: none;
+    z-index: 2;
 }
 
 .input-wrapper input {
@@ -84,7 +91,7 @@ body {
     background-color: #0f172a;
     border: 1px solid #1e293b;
     color: #ffffff;
-    padding: 10px 10px 10px 38px;
+    padding: 10px 40px 10px 38px;
     border-radius: 6px;
     font-size: 0.9rem;
     outline: none;
@@ -93,6 +100,24 @@ body {
 
 .input-wrapper input:focus {
     border-color: #0284c7;
+}
+
+/* Icona OCCHIO a DESTRA */
+.toggle-password {
+    position: absolute !important;
+    right: 12px !important;
+    left: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    cursor: pointer !important;
+    color: #64748b !important;
+    z-index: 10 !important;
+    font-size: 0.95rem !important;
+    transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+    color: #0284c7 !important;
 }
 
 .btn-login {
@@ -156,34 +181,6 @@ body {
     display: flex; 
     justify-content: center; 
     gap: 30px; 
-}
-
-/* ALLINAMENTO OCCHIO E CAMPO PASSWORD */
-.input-wrapper.password-field {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.input-wrapper.password-field input {
-    padding-right: 40px !important; /* Spazio per non coprire il testo digitato */
-    width: 100%;
-}
-
-.toggle-password {
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #64748b;
-    z-index: 10;
-    font-size: 0.95rem;
-    transition: color 0.2s ease;
-}
-
-.toggle-password:hover {
-    color: #0284c7;
 }
 
 .dashboard-container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
