@@ -36,6 +36,7 @@ const agentiDatabase = [
 ];
 
 let utenteCorrente = null;
+let timerCartellino = null; // Gestione del cronometro del turno
 
 // CALCOLA IL SALUTO IN BASE ALL'ORARIO UFFICIALE DI ROMA (Europe/Rome)
 function ottieniSalutoOrario() {
@@ -65,6 +66,68 @@ function applicaESalvaPosFoto() {
     if (utenteCorrente) {
         localStorage.setItem(`mdc_fotopos_x_${utenteCorrente.username}`, posX);
         localStorage.setItem(`mdc_fotopos_y_${utenteCorrente.username}`, posY);
+    }
+}
+
+// FORMATTA UN INTERVALLO DI TEMPO (IN SECONDI) IN HH:MM:SS
+function formattaTempo(secondiTotali) {
+    const ore = Math.floor(secondiTotali / 3600).toString().padStart(2, '0');
+    const minuti = Math.floor((secondiTotali % 3600) / 60).toString().padStart(2, '0');
+    const secondi = (secondiTotali % 60).toString().padStart(2, '0');
+    return `${ore}:${minuti}:${secondi}`;
+}
+
+// AGGIORNA E GESTISCE LO STATO DEL CARTELLINO
+function aggiornaStatoCartellino() {
+    if (!utenteCorrente) return;
+
+    const btnEntrata = document.getElementById('btnEntrataServizio');
+    const btnUscita = document.getElementById('btnUscitaServizio');
+    const badgeStato = document.getElementById('cartellinoStatoBadge');
+    const txtOraInizio = document.getElementById('cartellinoOraInizio');
+    const txtTimer = document.getElementById('cartellinoTimer');
+
+    const oraInizioSalvata = localStorage.getItem(`mdc_cartellino_inizio_${utenteCorrente.username}`);
+
+    if (oraInizioSalvata) {
+        // IN SERVIZIO
+        if (btnEntrata) btnEntrata.disabled = true;
+        if (btnUscita) btnUscita.disabled = false;
+
+        if (badgeStato) {
+            badgeStato.innerText = "IN SERVIZIO";
+            badgeStato.className = "badge bg-success";
+        }
+
+        const dataInizio = new Date(parseInt(oraInizioSalvata, 10));
+        if (txtOraInizio) {
+            txtOraInizio.innerText = dataInizio.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Avvia il cronometro live
+        if (timerCartellino) clearInterval(timerCartellino);
+        timerCartellino = setInterval(() => {
+            const diffSecondi = Math.floor((new Date().getTime() - dataInizio.getTime()) / 1000);
+            if (txtTimer) txtTimer.innerText = formattaTempo(diffSecondi);
+        }, 1000);
+
+    } else {
+        // FUORI SERVIZIO
+        if (btnEntrata) btnEntrata.disabled = false;
+        if (btnUscita) btnUscita.disabled = true;
+
+        if (badgeStato) {
+            badgeStato.innerText = "FUORI SERVIZIO";
+            badgeStato.className = "badge bg-secondary";
+        }
+
+        if (txtOraInizio) txtOraInizio.innerText = "--:--";
+        if (txtTimer) txtTimer.innerText = "00:00:00";
+
+        if (timerCartellino) {
+            clearInterval(timerCartellino);
+            timerCartellino = null;
+        }
     }
 }
 
@@ -114,6 +177,9 @@ function caricaDashboard(agente) {
         fotoEl.style.objectPosition = `${posXSalvata}% ${posYSalvata}%`;
     }
 
+    // CARICA LO STATO DEL CARTELLINO PER L'UTENTE ATTUALE
+    aggiornaStatoCartellino();
+
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('dashboard-section').style.display = 'block';
 }
@@ -136,6 +202,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnConfirmLogout = document.getElementById('btnConfirmLogout');
 
     const btnUpdateProfile = document.getElementById('btnUpdateProfile');
+
+    // ELEMENTI DEL CARTELLINO
+    const btnEntrataServizio = document.getElementById('btnEntrataServizio');
+    const btnUscitaServizio = document.getElementById('btnUscitaServizio');
 
     // CONTROLLO SESSIONE GIÀ ATTIVA
     const sessioneSalvata = localStorage.getItem('mdc_utente_loggato');
@@ -181,6 +251,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // LOGICHE BOTTONI CARTELLINO
+    if (btnEntrataServizio) {
+        btnEntrataServizio.addEventListener('click', function() {
+            if (!utenteCorrente) return;
+            const adesso = new Date().getTime();
+            localStorage.setItem(`mdc_cartellino_inizio_${utenteCorrente.username}`, adesso);
+            aggiornaStatoCartellino();
+        });
+    }
+
+    if (btnUscitaServizio) {
+        btnUscitaServizio.addEventListener('click', function() {
+            if (!utenteCorrente) return;
+            localStorage.removeItem(`mdc_cartellino_inizio_${utenteCorrente.username}`);
+            aggiornaStatoCartellino();
+        });
+    }
+
     // MODALE ESCI (LOGOUT CON SCHEDA DI CONFERMA)
     if (btnLogout) {
         btnLogout.addEventListener('click', function() {
@@ -199,6 +287,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (modalLogout) modalLogout.style.display = 'none';
             localStorage.removeItem('mdc_utente_loggato');
             
+            if (timerCartellino) clearInterval(timerCartellino);
+
             document.getElementById('dashboard-section').style.display = 'none';
             document.getElementById('login-section').style.display = 'flex';
             utenteCorrente = null;
@@ -255,14 +345,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // BOTTONE AGGIORNA PROFILO / GRADO (RICARICA PAGINA E FORZA AGGIORNAMENTO DATI)
+    // BOTTONE AGGIORNA PROFILO / GRADO
     if (btnUpdateProfile) {
         btnUpdateProfile.addEventListener('click', function() {
             const icon = document.getElementById('iconUpdateProfile');
             if (icon) icon.classList.add('fa-spin');
 
             setTimeout(() => {
-                location.reload(); // Ricarica e aggiorna la pagina con tutte le informazioni salvate
+                location.reload();
             }, 500);
         });
     }
