@@ -1,13 +1,13 @@
 // DATABASE UTENTI PREIMPOSTATI
 const agentiDatabase = [
     {
-        username: "Ethan.Buzzi",
-        password: "123",
-        nome: "Ethan",
-        cognome: "Buzzi",
-        matricola: "PDS-134",
-        grado: "Agente Scelto",
-        mansione: "Pattugliamento",
+        username: "Eric.Guidi",
+        password: "Polizia1234",
+        nome: "Eric",
+        cognome: "Guidi",
+        matricola: "PDS-0001",
+        grado: "Dirigente Generale di Pubblica Sicurezza",
+        mansione: "Funzionario",
         discordId: "1292573195408507014",
         specializzazione: "Squadra Volante"
     },
