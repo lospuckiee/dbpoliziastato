@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polizia di Stato - Area Personale</title>
+    <!-- CSS Personale -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- FontAwesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- 1. BARRA SUPERIORE DI NAVIGAZIONE -->
+    <header class="navbar">
+        <div class="logo-section">
+            <img src="assets/logo-polizia.png" alt="Logo Polizia" class="logo-img">
+            <span class="logo-title">POLIZIA DI STATO</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#" class="active">HOME</a>
+            <a href="#">PRENOTAZIONI</a>
+            <a href="#">ORDINE ARMAMETI</a>
+            <a href="#">CODICE PENALE</a>
+            <a href="#">CONTATTI</a>
+        </nav>
+        <div class="user-badge">
+            <i class="fa-solid fa-lock"></i> Area Riservata
+        </div>
+    </header>
+
+    <!-- 2. BANNER DI ROSSO/BLU AVVISI -->
+    <div class="top-banner">
+        <span><i class="fa-solid fa-phone"></i> Emergenze: <strong>112</strong> (Servizio attivo 24/7)</span>
+        <span><i class="fa-brands fa-discord"></i> Server Discord Ufficiale</span>
+    </div>
+
+    <!-- 3. CONTENITORE PRINCIPALE (LAYOUT A 2 COLONNE) -->
+    <main class="dashboard-container">
+
+        <!-- HEADER AREA PERSONALE -->
+        <div class="dashboard-header">
+            <div class="user-welcome">
+                <i class="fa-solid fa-shield-halved logo-icon"></i>
+                <div>
+                    <h2>Area Personale</h2>
+                    <p>Buongiorno, <strong>Ethan Buzzi</strong></p>
+                    <span class="status-badge off-duty"><i class="fa-solid fa-circle"></i> Fuori servizio</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary"><i class="fa-solid fa-key"></i> Cambia password</button>
+                <button class="btn btn-outline"><i class="fa-solid fa-right-from-bracket"></i> Esci</button>
+            </div>
+        </div>
+
+        <!-- LAYOUT FOTO/DATI + GRIGLIA MODULI -->
+        <div class="dashboard-grid">
+
+            <!-- COLONNA SINISTRA: SCHEDA AGENTE (I Miei Dati) -->
+            <aside class="profile-card">
+                <div class="card-title">
+                    <i class="fa-solid fa-id-card"></i> I miei dati
+                    <small>Dati del tuo account (sola lettura).</small>
+                </div>
+
+                <div class="avatar-container">
+                    <button class="btn-icon notify-btn" title="Attiva notifiche"><i class="fa-solid fa-bell"></i> Attiva notifiche</button>
+                    <div class="avatar-wrapper">
+                        <img src="assets/avatar-default.jpg" alt="Foto Agente" class="avatar-img">
+                        <button class="edit-avatar-btn"><i class="fa-solid fa-pencil"></i></button>
+                    </div>
+                    <h3>Ethan Buzzi</h3>
+                    <p class="role-subtitle">Agente Scelto</p>
+                    <a href="#" class="link-small">Regola posizione foto</a>
+                    <div class="badge-matricola">MATRICOLA: <strong>PDS-134</strong></div>
+                </div>
+
+                <div class="profile-fields">
+                    <div class="field-group">
+                        <label>Username</label>
+                        <input type="text" value="Ethan.Buzzi" readonly>
+                    </div>
+                    <div class="field-group">
+                        <label>Nome</label>
+                        <input type="text" value="Ethan" readonly>
+                    </div>
+                    <div class="field-group">
+                        <label>Cognome</label>
+                        <input type="text" value="Buzzi" readonly>
+                    </div>
+                    <div class="field-group">
+                        <label>Discord ID</label>
+                        <input type="text" value="1292573195408507014" readonly>
+                    </div>
+                    <div class="field-group">
+                        <label>Grado</label>
+                        <input type="text" value="Agente Scelto" readonly>
+                    </div>
+                    <div class="field-group">
+                        <label>Mansione</label>
+                        <input type="text" value="---" readonly>
+                    </div>
+                    <div class="field-group">
+                        <label>Specializzazioni</label>
+                        <div class="tags-container">
+                            <span class="tag"><i class="fa-solid fa-motorcycle"></i> Squadra Volante</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- COLONNA DESTRA: GRIGLIA BOTTONI / SERVIZI -->
+            <section class="main-content">
+
+                <!-- BANNER DI STATO SUPERIORE -->
+                <div class="status-box">
+                    <div class="status-info">
+                        <strong>Agente Scelto</strong>
+                        <span>Ethan Buzzi - @Ethan.Buzzi</span>
+                    </div>
+                    <button class="btn btn-primary"><i class="fa-solid fa-rotate"></i> Aggiorna profilo / grado</button>
+                </div>
+
+                <!-- GRIGLIA DELLE SCHEDE DI SERVIZIO -->
+                <div class="modules-grid">
+
+                    <div class="module-card">
+                        <i class="fa-regular fa-clock module-icon"></i>
+                        <h4>Timbra Cartellino</h4>
+                        <p>Avvia/termina turno e registra le ore</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-file-signature module-icon"></i>
+                        <h4>Porto d'Armi & Idoneità</h4>
+                        <p>Anamnestici, idoneità e registri</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-file-invoice-dollar module-icon"></i>
+                        <h4>Verbali & Sanzioni</h4>
+                        <p>Compila e invia verbali di contestazione</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-bullhorn module-icon"></i>
+                        <h4>Richiedi Rinforzi</h4>
+                        <p>Richiedi supporto / fuori servizio</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-box-archive module-icon"></i>
+                        <h4>Deposito Armeria</h4>
+                        <p>Gestisci le dotazioni ricevute</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-handcuffs module-icon"></i>
+                        <h4>Casellario Giudiziale</h4>
+                        <p>Storico arresti, fermi e sanzioni</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-envelope module-icon"></i>
+                        <h4>Posta Interna</h4>
+                        <p>Messaggi tra operatori e centrale</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-users-gear module-icon"></i>
+                        <h4>Operatori</h4>
+                        <p>Organico con foto e gradi attivi</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-magnifying-glass module-icon"></i>
+                        <h4>Anagrafica Cittadini</h4>
+                        <p>Rubrica cittadini, cerca e modifica</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-sitemap module-icon"></i>
+                        <h4>Organigramma</h4>
+                        <p>Foglio organico di reparto</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-graduation-cap module-icon"></i>
+                        <h4>Bandi & Corsi</h4>
+                        <p>Test di specializzazione e addestramento</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-car-side module-icon"></i>
+                        <h4>Parco Auto</h4>
+                        <p>Veicoli di pattuglia e reparto mobile</p>
+                    </div>
+
+                    <div class="module-card">
+                        <i class="fa-solid fa-user-shield module-icon"></i>
+                        <h4>Divise & Equipaggiamento</h4>
+                        <p>Uniformi uomo/donna per grado</p>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- JS Personale -->
+    <script src="js/script.js"></script>
+</body>
+</html>
