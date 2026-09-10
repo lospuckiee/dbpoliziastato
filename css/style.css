@@ -1,0 +1,333 @@
+/* RESET E STILE DI BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: #0b0f19;
+    color: #e2e8f0;
+    min-height: 100vh;
+}
+
+/* NAVBAR SUPERIORE */
+.navbar {
+    background-color: #0f172a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 28px;
+    border-bottom: 2px solid #0284c7;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-img {
+    height: 38px;
+    width: auto;
+}
+
+.logo-title {
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 22px;
+}
+
+.nav-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #38bdf8;
+}
+
+.user-badge {
+    background-color: #0284c7;
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* BANNER EMERGENZE */
+.top-banner {
+    background-color: #1e1b4b;
+    color: #cbd5e1;
+    border-bottom: 1px solid #1e293b;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+}
+
+.top-banner strong {
+    color: #ef4444;
+}
+
+/* MAIN CONTAINER */
+.dashboard-container {
+    max-width: 1400px;
+    margin: 25px auto;
+    padding: 0 20px;
+}
+
+/* HEADER AREA PERSONALE */
+.dashboard-header {
+    background-color: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-welcome {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo-icon {
+    font-size: 2.2rem;
+    color: #0284c7;
+}
+
+.status-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    margin-top: 6px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.status-badge.off-duty {
+    background-color: #374151;
+    color: #9ca3af;
+}
+
+/* BOTTONI */
+.btn {
+    padding: 9px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.btn-secondary { background-color: #374151; color: #ffffff; }
+.btn-secondary:hover { background-color: #4b5563; }
+.btn-outline { background-color: transparent; border: 1px solid #4b5563; color: #ffffff; }
+.btn-outline:hover { background-color: #1f2937; }
+.btn-primary { background-color: #0284c7; color: #ffffff; }
+.btn-primary:hover { background-color: #0369a1; }
+
+/* GRID LAYOUT A 2 COLONNE */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+}
+
+/* COLONNA SINISTRA (PROFILO) */
+.profile-card {
+    background-color: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.card-title {
+    font-weight: 700;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #1f2937;
+    padding-bottom: 10px;
+    color: #f3f4f6;
+}
+
+.card-title small {
+    display: block;
+    color: #6b7280;
+    font-weight: 400;
+    font-size: 0.75rem;
+    margin-top: 2px;
+}
+
+.avatar-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.notify-btn {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    color: #f59e0b;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 12px auto;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid #0284c7;
+}
+
+.edit-avatar-btn {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #0284c7;
+    border: none;
+    color: #ffffff;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+}
+
+.role-subtitle {
+    color: #9ca3af;
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+.link-small {
+    display: inline-block;
+    color: #0284c7;
+    font-size: 0.75rem;
+    margin-top: 6px;
+    text-decoration: none;
+}
+
+.badge-matricola {
+    background-color: #111827;
+    color: #f59e0b;
+    border: 1px solid #d97706;
+    padding: 8px;
+    border-radius: 6px;
+    margin-top: 12px;
+    font-size: 0.85rem;
+}
+
+/* CAMPI PROFILO */
+.profile-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.field-group label {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.field-group input {
+    width: 100%;
+    background-color: #030712;
+    border: 1px solid #1f2937;
+    color: #d1d5db;
+    padding: 8px 10px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+}
+
+.tag {
+    background-color: #1f2937;
+    color: #38bdf8;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    display: inline-block;
+    border: 1px solid #0284c7;
+}
+
+/* COLONNA DESTRA (SCHEDE SERVIZI) */
+.status-box {
+    background-color: #111827;
+    border: 1px solid #1f2937;
+    padding: 16px 20px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 16px;
+}
+
+.module-card {
+    background-color: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 22px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s, background-color 0.2s;
+}
+
+.module-card:hover {
+    transform: translateY(-4px);
+    border-color: #0284c7;
+    background-color: #1f2937;
+}
+
+.module-icon {
+    font-size: 2rem;
+    color: #38bdf8;
+    margin-bottom: 12px;
+}
+
+.module-card h4 {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    color: #f9fafb;
+}
+
+.module-card p {
+    font-size: 0.75rem;
+    color: #6b7280;
+    line-height: 1.3;
+}
