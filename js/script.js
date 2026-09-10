@@ -37,10 +37,9 @@ const agentiDatabase = [
 
 let utenteCorrente = null;
 
-// FUNZIONE PER CALCOLARE IL SALUTO IN BASE ALL'ORARIO
+// CALCOLA IL SALUTO IN BASE ALL'ORARIO
 function ottieniSalutoOrario() {
     const ora = new Date().getHours();
-
     if (ora >= 5 && ora < 12) {
         return "Buongiorno";
     } else if (ora >= 12 && ora < 17) {
@@ -48,7 +47,6 @@ function ottieniSalutoOrario() {
     } else if (ora >= 17 && ora <= 23) {
         return "Buona Sera";
     } else {
-        // Ora da 0 a 4
         return "Buona Nottata";
     }
 }
@@ -111,21 +109,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // MODALE ESCI (LOGOUT)
     if (btnLogout) {
         btnLogout.addEventListener('click', function() {
-            modalLogout.style.display = 'flex';
+            if (modalLogout) modalLogout.style.display = 'flex';
         });
     }
 
     if (btnCancelLogout) {
         btnCancelLogout.addEventListener('click', function() {
-            modalLogout.style.display = 'none';
+            if (modalLogout) modalLogout.style.display = 'none';
         });
     }
 
     if (btnConfirmLogout) {
         btnConfirmLogout.addEventListener('click', function() {
-            modalLogout.style.display = 'none';
-            document.getElementById('dashboard-section').style.display = 'none';
-            document.getElementById('login-section').style.display = 'flex';
+            if (modalLogout) modalLogout.style.display = 'none';
+            const dash = document.getElementById('dashboard-section');
+            const login = document.getElementById('login-section');
+            if (dash) dash.style.display = 'none';
+            if (login) login.style.display = 'flex';
             utenteCorrente = null;
             if (loginForm) loginForm.reset();
         });
@@ -134,16 +134,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // MODALE CAMBIA PASSWORD
     if (btnOpenChangePassword) {
         btnOpenChangePassword.addEventListener('click', function() {
-            document.getElementById('pwd-error').style.display = 'none';
-            document.getElementById('pwd-success').style.display = 'none';
-            formChangePassword.reset();
-            modalChangePassword.style.display = 'flex';
+            const err = document.getElementById('pwd-error');
+            const succ = document.getElementById('pwd-success');
+            if (err) err.style.display = 'none';
+            if (succ) succ.style.display = 'none';
+            if (formChangePassword) formChangePassword.reset();
+            if (modalChangePassword) modalChangePassword.style.display = 'flex';
         });
     }
 
     if (btnClosePwdModal) {
         btnClosePwdModal.addEventListener('click', function() {
-            modalChangePassword.style.display = 'none';
+            if (modalChangePassword) modalChangePassword.style.display = 'none';
         });
     }
 
@@ -157,33 +159,38 @@ document.addEventListener('DOMContentLoaded', function() {
             const errorBox = document.getElementById('pwd-error');
             const successBox = document.getElementById('pwd-success');
 
-            errorBox.style.display = 'none';
-            successBox.style.display = 'none';
+            if (errorBox) errorBox.style.display = 'none';
+            if (successBox) successBox.style.display = 'none';
 
             if (oldPwd !== utenteCorrente.password) {
-                errorBox.innerText = 'La password attuale inserita non è corretta.';
-                errorBox.style.display = 'block';
+                if (errorBox) {
+                    errorBox.innerText = 'La password attuale inserita non è corretta.';
+                    errorBox.style.display = 'block';
+                }
                 return;
             }
 
             if (newPwd !== confirmPwd) {
-                errorBox.innerText = 'Le nuove password non corrispondono.';
-                errorBox.style.display = 'block';
+                if (errorBox) {
+                    errorBox.innerText = 'Le nuove password non corrispondono.';
+                    errorBox.style.display = 'block';
+                }
                 return;
             }
 
-            // Aggiorna la password nell'oggetto utente corrente e nel DB
             utenteCorrente.password = newPwd;
-            successBox.innerText = 'Password aggiornata con successo!';
-            successBox.style.display = 'block';
+            if (successBox) {
+                successBox.innerText = 'Password aggiornata con successo!';
+                successBox.style.display = 'block';
+            }
 
             setTimeout(() => {
-                modalChangePassword.style.display = 'none';
+                if (modalChangePassword) modalChangePassword.style.display = 'none';
             }, 1200);
         });
     }
 
-    // BOTTONE AGGIORNA PROFILO / GRADO
+    // BOTTONE AGGIORNA PROFILO
     if (btnUpdateProfile) {
         btnUpdateProfile.addEventListener('click', function() {
             const icon = document.getElementById('iconUpdateProfile');
@@ -198,65 +205,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // GESTIONE AVATAR E POSIZIONAMENTO
+    const btnEditAvatar = document.getElementById('btnEditAvatar');
+    if (btnEditAvatar) {
+        btnEditAvatar.addEventListener('click', function() {
+            const nuovaUrl = prompt("Inserisci l'URL dell'immagine del tuo profilo:");
+            if (nuovaUrl && nuovaUrl.trim() !== "") {
+                const img = document.getElementById('mieiDatiFoto');
+                if (img) img.src = nuovaUrl.trim();
+            }
+        });
+    }
+
+    const btnPosToggle = document.getElementById('mieiDatiFotoPosToggle');
+    if (btnPosToggle) {
+        btnPosToggle.addEventListener('click', function() {
+            const box = document.getElementById('mieiDatiFotoPosBox');
+            if (box) {
+                box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
+            }
+        });
+    }
+
+    const posXInput = document.getElementById('mieiDatiFotoPosX');
+    const posYInput = document.getElementById('mieiDatiFotoPosY');
+
+    if (posXInput) posXInput.addEventListener('input', applicaPosFoto);
+    if (posYInput) posYInput.addEventListener('input', applicaPosFoto);
+
+    const btnResetPos = document.getElementById('btnResetPosFoto');
+    if (btnResetPos) {
+        btnResetPos.addEventListener('click', function() {
+            if (posXInput) posXInput.value = 50;
+            if (posYInput) posYInput.value = 30;
+            applicaPosFoto();
+        });
+    }
 });
 
-// POPOLA I DATI DELLA DASHBOARD CON L'UTENTE AUTENTICATO
-function caricaDashboard(agente) {
-    // Imposta il saluto dinamico
-    const saluto = ottieniSalutoOrario();
-    document.getElementById('dash-greeting').innerText = saluto;
-
-    document.getElementById('dash-fullname').innerText = `${agente.nome} ${agente.cognome}`;
-    document.getElementById('dash-card-name').innerText = `${agente.nome} ${agente.cognome}`;
-    document.getElementById('dash-card-grado-sub').innerText = agente.grado;
-    document.getElementById('dash-matricola').innerText = agente.matricola;
-
-    document.getElementById('dash-username').value = agente.username;
-    document.getElementById('dash-nome').value = agente.nome;
-    document.getElementById('dash-cognome').value = agente.cognome;
-    document.getElementById('dash-discord').value = agente.discordId;
-    document.getElementById('dash-grado').value = agente.grado;
-    document.getElementById('dash-mansione').value = agente.mansione;
-    document.getElementById('dash-spec').innerHTML = `<i class="fa-solid fa-shield"></i> ${agente.specializzazione}`;
-
-    document.getElementById('dash-status-grado').innerText = agente.grado;
-    document.getElementById('dash-status-user').innerText = `${agente.nome} ${agente.cognome} - @${agente.username}`;
-    
-    // Avatar
-    const fotoEl = document.getElementById('mieiDatiFoto');
-    if (fotoEl) {
-        fotoEl.src = `https://ui-avatars.com/api/?name=${agente.nome}+${agente.cognome}&background=0284c7&color=fff&size=180`;
-    }
-
-    // Cambio schermata
-    document.getElementById('login-section').style.display = 'none';
-    document.getElementById('dashboard-section').style.display = 'block';
-}
-
-// ----------------------------------------------------
-// FUNZIONI PER LA GESTIONE E REGOLAZIONE DELLA FOTO
-// ----------------------------------------------------
-
-function mieiDatiModificaFoto() {
-    const nuovaUrl = prompt("Inserisci l'URL dell'immagine del tuo profilo:");
-    if (nuovaUrl && nuovaUrl.trim() !== "") {
-        const img = document.getElementById('mieiDatiFoto');
-        if (img) {
-            img.src = nuovaUrl.trim();
-        }
-    }
-}
-
-function mieiDatiTogglePosFoto() {
-    const box = document.getElementById('mieiDatiFotoPosBox');
-    if (box) {
-        box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
-    }
-}
-
-function mieiDatiApplicaPosFoto() {
-    const posX = document.getElementById('mieiDatiFotoPosX').value;
-    const posY = document.getElementById('mieiDatiFotoPosY').value;
+function applicaPosFoto() {
+    const posX = document.getElementById('mieiDatiFotoPosX')?.value || 50;
+    const posY = document.getElementById('mieiDatiFotoPosY')?.value || 30;
     const img = document.getElementById('mieiDatiFoto');
 
     if (img) {
@@ -265,8 +254,59 @@ function mieiDatiApplicaPosFoto() {
     }
 }
 
-function mieiDatiResetPosFoto() {
-    document.getElementById('mieiDatiFotoPosX').value = 50;
-    document.getElementById('mieiDatiFotoPosY').value = 30;
-    mieiDatiApplicaPosFoto();
+// POPOLA I DATI DELLA DASHBOARD CON L'UTENTE AUTENTICATO
+function caricaDashboard(agente) {
+    const dashGreeting = document.getElementById('dash-greeting');
+    if (dashGreeting) dashGreeting.innerText = ottieniSalutoOrario();
+
+    const dashFullname = document.getElementById('dash-fullname');
+    if (dashFullname) dashFullname.innerText = `${agente.nome} ${agente.cognome}`;
+
+    const dashCardName = document.getElementById('dash-card-name');
+    if (dashCardName) dashCardName.innerText = `${agente.nome} ${agente.cognome}`;
+
+    const dashCardGrado = document.getElementById('dash-card-grado-sub');
+    if (dashCardGrado) dashCardGrado.innerText = agente.grado;
+
+    const dashMatricola = document.getElementById('dash-matricola');
+    if (dashMatricola) dashMatricola.innerText = agente.matricola;
+
+    const dashUsername = document.getElementById('dash-username');
+    if (dashUsername) dashUsername.value = agente.username;
+
+    const dashNome = document.getElementById('dash-nome');
+    if (dashNome) dashNome.value = agente.nome;
+
+    const dashCognome = document.getElementById('dash-cognome');
+    if (dashCognome) dashCognome.value = agente.cognome;
+
+    const dashDiscord = document.getElementById('dash-discord');
+    if (dashDiscord) dashDiscord.value = agente.discordId;
+
+    const dashGrado = document.getElementById('dash-grado');
+    if (dashGrado) dashGrado.value = agente.grado;
+
+    const dashMansione = document.getElementById('dash-mansione');
+    if (dashMansione) dashMansione.value = agente.mansione;
+
+    const dashSpec = document.getElementById('dash-spec');
+    if (dashSpec) dashSpec.innerHTML = `<i class="fa-solid fa-shield"></i> ${agente.specializzazione}`;
+
+    const dashStatusGrado = document.getElementById('dash-status-grado');
+    if (dashStatusGrado) dashStatusGrado.innerText = agente.grado;
+
+    const dashStatusUser = document.getElementById('dash-status-user');
+    if (dashStatusUser) dashStatusUser.innerText = `${agente.nome} ${agente.cognome} - @${agente.username}`;
+    
+    // Avatar predefinito
+    const fotoEl = document.getElementById('mieiDatiFoto');
+    if (fotoEl) {
+        fotoEl.src = `https://ui-avatars.com/api/?name=${agente.nome}+${agente.cognome}&background=0284c7&color=fff&size=180`;
+    }
+
+    // Cambio schermata
+    const loginSec = document.getElementById('login-section');
+    const dashSec = document.getElementById('dashboard-section');
+    if (loginSec) loginSec.style.display = 'none';
+    if (dashSec) dashSec.style.display = 'block';
 }
