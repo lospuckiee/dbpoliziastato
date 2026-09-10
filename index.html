@@ -17,7 +17,7 @@
     <div id="login-section" class="login-wrapper">
         <div class="login-card">
             <div class="login-header">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg" alt="Logo Polizia">
+                <img src="assets/logo-polizia.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg'" alt="Logo Polizia">
                 <h1>POLIZIA DI STATO</h1>
                 <p>Accesso Riservato Portale MDC</p>
             </div>
@@ -37,10 +37,10 @@
 
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <div class="input-wrapper" style="position: relative;">
-                        <i class="fa-solid fa-lock"></i>
+                    <div class="input-wrapper password-field">
+                        <i class="fa-solid fa-lock icon-left"></i>
                         <input type="password" id="password" placeholder="••••••••" required>
-                        <i class="fa-solid fa-eye" id="togglePassword" style="position: absolute; right: 15px; cursor: pointer; top: 50%; transform: translateY(-50%); color: #64748b;"></i>
+                        <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
                     </div>
                 </div>
 
@@ -55,7 +55,7 @@
     <div id="dashboard-section" style="display: none;">
         <header class="navbar">
             <div class="logo-section">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg" alt="Logo Polizia" class="logo-img">
+                <img src="assets/logo-polizia.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg'" alt="Logo Polizia" class="logo-img">
                 <span class="logo-title">POLIZIA DI STATO</span>
             </div>
             <nav class="nav-links">
