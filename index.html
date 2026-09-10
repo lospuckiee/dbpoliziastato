@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polizia di Stato - Area Personale</title>
-    <!-- CSS Personale -->
-    <link rel="stylesheet" href="css/style.css">
+    <title>Polizia di Stato - Portale Gestionale MDC</title>
+
+    <!-- Collegamento al file CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+
     <!-- FontAwesome per le icone -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- 1. BARRA SUPERIORE DI NAVIGAZIONE -->
+    <!-- BARRA SUPERIORE (NAVBAR) -->
     <header class="navbar">
         <div class="logo-section">
-            <img src="assets/logo-polizia.png" alt="Logo Polizia" class="logo-img">
+            <img src="./assets/logo-polizia.png" alt="Logo Polizia" class="logo-img" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg'">
             <span class="logo-title">POLIZIA DI STATO</span>
         </div>
         <nav class="nav-links">
             <a href="#" class="active">HOME</a>
             <a href="#">PRENOTAZIONI</a>
-            <a href="#">ORDINE ARMAMETI</a>
-            <a href="#">CODICE PENALE</a>
+            <a href="#">ORDINE ARMAMENTI</a>
+            <a href="#">LISTINO PREZZI</a>
             <a href="#">CONTATTI</a>
         </nav>
         <div class="user-badge">
@@ -29,13 +31,13 @@
         </div>
     </header>
 
-    <!-- 2. BANNER DI ROSSO/BLU AVVISI -->
+    <!-- BANNER AVVISI / EMERGENZE -->
     <div class="top-banner">
         <span><i class="fa-solid fa-phone"></i> Emergenze: <strong>112</strong> (Servizio attivo 24/7)</span>
-        <span><i class="fa-brands fa-discord"></i> Server Discord Ufficiale</span>
+        <span><i class="fa-brands fa-discord"></i> Server Discord Ufficiale Polizia di Stato</span>
     </div>
 
-    <!-- 3. CONTENITORE PRINCIPALE (LAYOUT A 2 COLONNE) -->
+    <!-- CONTENITORE DASHBOARD -->
     <main class="dashboard-container">
 
         <!-- HEADER AREA PERSONALE -->
@@ -54,10 +56,10 @@
             </div>
         </div>
 
-        <!-- LAYOUT FOTO/DATI + GRIGLIA MODULI -->
+        <!-- LAYOUT 2 COLONNE -->
         <div class="dashboard-grid">
 
-            <!-- COLONNA SINISTRA: SCHEDA AGENTE (I Miei Dati) -->
+            <!-- COLONNA SINISTRA: DATI AGENTE -->
             <aside class="profile-card">
                 <div class="card-title">
                     <i class="fa-solid fa-id-card"></i> I miei dati
@@ -67,7 +69,7 @@
                 <div class="avatar-container">
                     <button class="btn-icon notify-btn" title="Attiva notifiche"><i class="fa-solid fa-bell"></i> Attiva notifiche</button>
                     <div class="avatar-wrapper">
-                        <img src="assets/avatar-default.jpg" alt="Foto Agente" class="avatar-img">
+                        <img src="./assets/avatar-default.jpg" alt="Foto Agente" class="avatar-img" onerror="this.src='https://ui-avatars.com/api/?name=Ethan+Buzzi&background=0284c7&color=fff&size=128'">
                         <button class="edit-avatar-btn"><i class="fa-solid fa-pencil"></i></button>
                     </div>
                     <h3>Ethan Buzzi</h3>
@@ -110,10 +112,10 @@
                 </div>
             </aside>
 
-            <!-- COLONNA DESTRA: GRIGLIA BOTTONI / SERVIZI -->
+            <!-- COLONNA DESTRA: SERVIZI / MODULI POLIZIA -->
             <section class="main-content">
 
-                <!-- BANNER DI STATO SUPERIORE -->
+                <!-- STATUS BANNER -->
                 <div class="status-box">
                     <div class="status-info">
                         <strong>Agente Scelto</strong>
@@ -122,7 +124,7 @@
                     <button class="btn btn-primary"><i class="fa-solid fa-rotate"></i> Aggiorna profilo / grado</button>
                 </div>
 
-                <!-- GRIGLIA DELLE SCHEDE DI SERVIZIO -->
+                <!-- GRIGLIA SCHEDE -->
                 <div class="modules-grid">
 
                     <div class="module-card">
@@ -132,75 +134,75 @@
                     </div>
 
                     <div class="module-card">
-                        <i class="fa-solid fa-file-signature module-icon"></i>
-                        <h4>Porto d'Armi & Idoneità</h4>
-                        <p>Anamnestici, idoneità e registri</p>
+                        <i class="fa-solid fa-id-card-clip module-icon"></i>
+                        <h4>Porto d'Armi & Licenze</h4>
+                        <p>Verifica e rilascio licenze armi</p>
                     </div>
 
                     <div class="module-card">
                         <i class="fa-solid fa-file-invoice-dollar module-icon"></i>
                         <h4>Verbali & Sanzioni</h4>
-                        <p>Compila e invia verbali di contestazione</p>
+                        <p>Compila verbali e contravvenzioni</p>
                     </div>
 
                     <div class="module-card">
                         <i class="fa-solid fa-bullhorn module-icon"></i>
                         <h4>Richiedi Rinforzi</h4>
-                        <p>Richiedi supporto / fuori servizio</p>
+                        <p>Segnalazioni e supporto di pattuglia</p>
                     </div>
 
                     <div class="module-card">
-                        <i class="fa-solid fa-box-archive module-icon"></i>
+                        <i class="fa-solid fa-gun module-icon"></i>
                         <h4>Deposito Armeria</h4>
-                        <p>Gestisci le dotazioni ricevute</p>
+                        <p>Gestione equipaggiamento e armi</p>
                     </div>
 
                     <div class="module-card">
-                        <i class="fa-solid fa-handcuffs module-icon"></i>
+                        <i class="fa-solid fa-scale-balanced module-icon"></i>
                         <h4>Casellario Giudiziale</h4>
-                        <p>Storico arresti, fermi e sanzioni</p>
+                        <p>Storico fermi, arresti e procedimenti</p>
                     </div>
 
                     <div class="module-card">
                         <i class="fa-solid fa-envelope module-icon"></i>
                         <h4>Posta Interna</h4>
-                        <p>Messaggi tra operatori e centrale</p>
+                        <p>Comunicazioni tra reparti e agenti</p>
                     </div>
 
                     <div class="module-card">
                         <i class="fa-solid fa-users-gear module-icon"></i>
                         <h4>Operatori</h4>
-                        <p>Organico con foto e gradi attivi</p>
+                        <p>Organico attivo, foto e gradi</p>
                     </div>
 
                     <div class="module-card">
-                        <i class="fa-solid fa-magnifying-glass module-icon"></i>
+                        <i class="fa-solid fa-address-book module-icon"></i>
                         <h4>Anagrafica Cittadini</h4>
-                        <p>Rubrica cittadini, cerca e modifica</p>
+                        <p>Ricerca scheda cittadino e dati</p>
                     </div>
 
                     <div class="module-card">
                         <i class="fa-solid fa-sitemap module-icon"></i>
                         <h4>Organigramma</h4>
-                        <p>Foglio organico di reparto</p>
+                        <p>Struttura gerarchica della Polizia</p>
                     </div>
 
                     <div class="module-card">
                         <i class="fa-solid fa-graduation-cap module-icon"></i>
-                        <h4>Bandi & Corsi</h4>
-                        <p>Test di specializzazione e addestramento</p>
+                        <h4>Bandi Interni</h4>
+                        <p>Corsi e test di specializzazione</p>
                     </div>
 
                     <div class="module-card">
                         <i class="fa-solid fa-car-side module-icon"></i>
-                        <h4>Parco Auto</h4>
-                        <p>Veicoli di pattuglia e reparto mobile</p>
+                        <h4>Parco Veicoli</h4>
+                        <p>Auto di pattuglia, moto e reparti</p>
                     </div>
 
                     <div class="module-card">
                         <i class="fa-solid fa-user-shield module-icon"></i>
-                        <h4>Divise & Equipaggiamento</h4>
-                        <p>Uniformi uomo/donna per grado</p>
+                        <h4>Divise & Uniformi</h4>
+                        <p>Equipaggiamento ordinario e speciale</p>
                     </div>
 
                 </div>
@@ -209,7 +211,6 @@
         </div>
     </main>
 
-    <!-- JS Personale -->
-    <script src="js/script.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 </html>
