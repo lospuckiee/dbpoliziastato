@@ -37,6 +37,42 @@ const agentiDatabase = [
 
 let utenteCorrente = null;
 
+// Funzione per sincronizzare lo stato del servizio sulla dashboard
+function aggiornaStatoServizioDashboard() {
+    const dashStatusBadge = document.getElementById('dashStatusBadge');
+    
+    if (!dashStatusBadge) return;
+
+    // Legge lo stato salvato (di default 'fuori_servizio')
+    const statoServizio = localStorage.getItem('statoServizio') || 'fuori_servizio';
+
+    // Rimuove tutte le classi di stato precedenti
+    dashStatusBadge.classList.remove('off-duty', 'on-duty', 'on-break');
+
+    if (statoServizio === 'in_servizio') {
+        dashStatusBadge.classList.add('on-duty');
+        dashStatusBadge.innerHTML = '<i class="fa-solid fa-circle"></i> In servizio';
+    } else if (statoServizio === 'in_pausa') {
+        dashStatusBadge.classList.add('on-break');
+        dashStatusBadge.innerHTML = '<i class="fa-solid fa-circle"></i> In pausa';
+    } else { // fuori_servizio
+        dashStatusBadge.classList.add('off-duty');
+        dashStatusBadge.innerHTML = '<i class="fa-solid fa-circle"></i> Fuori servizio';
+    }
+}
+
+// Esegui la funzione all'avvio della pagina o dopo il login
+document.addEventListener('DOMContentLoaded', () => {
+    aggiornaStatoServizioDashboard();
+});
+
+// Ascolta i cambiamenti di localStorage nel caso in cui l'utente timbri in un'altra scheda/finestra
+window.addEventListener('storage', (event) => {
+    if (event.key === 'statoServizio') {
+        aggiornaStatoServizioDashboard();
+    }
+});
+
 // CALCOLA IL SALUTO IN BASE ALL'ORARIO UFFICIALE DI ROMA (Europe/Rome)
 function ottieniSalutoOrario() {
     const oraRoma = parseInt(new Intl.DateTimeFormat('it-IT', {
