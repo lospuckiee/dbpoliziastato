@@ -98,11 +98,36 @@
                         <small>Dati del tuo account (sola lettura).</small>
                     </div>
 
+                    <!-- AVATAR E CONTROLLI MODIFICA FOTO -->
                     <div class="avatar-container">
                         <div class="avatar-wrapper">
-                            <img id="dash-avatar" src="" alt="Foto Agente" class="avatar-img">
-                            <button class="edit-avatar-btn"><i class="fa-solid fa-pencil"></i></button>
+                            <img id="mieiDatiFoto" src="https://via.placeholder.com/150" alt="Foto Agente" class="avatar-img">
+                            <button type="button" class="edit-avatar-btn" onclick="mieiDatiModificaFoto()" title="Modifica URL Foto">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
                         </div>
+
+                        <!-- PANNELLO REGOLAZIONE POSIZIONE FOTO -->
+                        <div class="foto-controls">
+                            <button type="button" id="mieiDatiFotoPosToggle" class="btn-toggle-pos" onclick="mieiDatiTogglePosFoto()">
+                                <i class="fa-solid fa-sliders"></i> Regola posizione foto
+                            </button>
+
+                            <div id="mieiDatiFotoPosBox" class="foto-pos-box" style="display: none;">
+                                <div class="pos-control-group">
+                                    <label for="mieiDatiFotoPosX">Orizzontale (X):</label>
+                                    <input type="range" id="mieiDatiFotoPosX" min="0" max="100" value="50" oninput="mieiDatiApplicaPosFoto()">
+                                </div>
+                                <div class="pos-control-group">
+                                    <label for="mieiDatiFotoPosY">Verticale (Y):</label>
+                                    <input type="range" id="mieiDatiFotoPosY" min="0" max="100" value="30" oninput="mieiDatiApplicaPosFoto()">
+                                </div>
+                                <button type="button" class="btn-reset-pos" onclick="mieiDatiResetPosFoto()">
+                                    <i class="fa-solid fa-rotate-left"></i> Ripristina
+                                </button>
+                            </div>
+                        </div>
+
                         <h3 id="dash-card-name">Agente</h3>
                         <p id="dash-card-grado-sub" style="color: #64748b; font-size: 0.85rem;">Grado</p>
                         <div class="badge-matricola">MATRICOLA: <strong id="dash-matricola">PDS-000</strong></div>
