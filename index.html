@@ -22,7 +22,7 @@
                 <p>Accesso Riservato Portale MDC</p>
             </div>
 
-            <div id="login-error" class="error-message">
+            <div id="login-error" class="error-message" style="display: none;">
                 <i class="fa-solid fa-triangle-exclamation"></i> Nome utente o password errati.
             </div>
 
@@ -37,9 +37,10 @@
 
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <div class="input-wrapper">
+                    <div class="input-wrapper" style="position: relative;">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" id="password" placeholder="••••••••" required>
+                        <i class="fa-solid fa-eye" id="togglePassword" style="position: absolute; right: 15px; cursor: pointer; top: 50%; transform: translateY(-50%); color: #64748b;"></i>
                     </div>
                 </div>
 
@@ -51,7 +52,7 @@
     </div>
 
     <!-- DASHBOARD GESTIONALE -->
-    <div id="dashboard-section">
+    <div id="dashboard-section" style="display: none;">
         <header class="navbar">
             <div class="logo-section">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg" alt="Logo Polizia" class="logo-img">
@@ -80,7 +81,7 @@
                     <i class="fa-solid fa-shield-halved logo-icon"></i>
                     <div>
                         <h2>Area Personale</h2>
-                        <p>Buongiorno, <strong id="dash-fullname">Ethan Buzzi</strong></p>
+                        <p>Buongiorno, <strong id="dash-fullname">Agente</strong></p>
                         <span class="status-badge off-duty"><i class="fa-solid fa-circle"></i> Fuori servizio</span>
                     </div>
                 </div>
@@ -102,9 +103,9 @@
                             <img id="dash-avatar" src="" alt="Foto Agente" class="avatar-img">
                             <button class="edit-avatar-btn"><i class="fa-solid fa-pencil"></i></button>
                         </div>
-                        <h3 id="dash-card-name">Ethan Buzzi</h3>
-                        <p id="dash-card-grado-sub" style="color: #64748b; font-size: 0.85rem;">Agente Scelto</p>
-                        <div class="badge-matricola">MATRICOLA: <strong id="dash-matricola">PDS-134</strong></div>
+                        <h3 id="dash-card-name">Agente</h3>
+                        <p id="dash-card-grado-sub" style="color: #64748b; font-size: 0.85rem;">Grado</p>
+                        <div class="badge-matricola">MATRICOLA: <strong id="dash-matricola">PDS-000</strong></div>
                     </div>
 
                     <div class="profile-fields">
@@ -135,7 +136,7 @@
                         <div class="field-group">
                             <label>Specializzazioni</label>
                             <div>
-                                <span class="tag" id="dash-spec"><i class="fa-solid fa-motorcycle"></i> Squadra Volante</span>
+                                <span class="tag" id="dash-spec"><i class="fa-solid fa-shield"></i> Squadra Volante</span>
                             </div>
                         </div>
                     </div>
@@ -144,8 +145,8 @@
                 <section class="main-content">
                     <div class="status-box">
                         <div>
-                            <strong id="dash-status-grado">Agente Scelto</strong><br>
-                            <span style="font-size: 0.8rem; color: #64748b;" id="dash-status-user">Ethan Buzzi - @Ethan.Buzzi</span>
+                            <strong id="dash-status-grado">Grado</strong><br>
+                            <span style="font-size: 0.8rem; color: #64748b;" id="dash-status-user">Nome Cognome - @User</span>
                         </div>
                         <button class="btn btn-primary"><i class="fa-solid fa-rotate"></i> Aggiorna profilo / grado</button>
                     </div>
