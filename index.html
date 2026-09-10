@@ -3,20 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polizia di Stato - Portale Gestionale MDC</title>
-
-    <!-- Collegamento al file CSS -->
-    <link rel="stylesheet" href="./css/style.css">
-
+    <title>Polizia di Stato - Area Personale</title>
+    
     <!-- FontAwesome per le icone -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* RESET E BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0b0f17; color: #e1e7ed; min-height: 100vh; }
+
+        /* NAVBAR */
+        .navbar { background-color: #111723; display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; border-bottom: 1px solid #1e293b; }
+        .logo-section { display: flex; align-items: center; gap: 12px; }
+        .logo-img { height: 35px; }
+        .logo-title { font-weight: 700; letter-spacing: 1px; color: #ffffff; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+        .nav-links a:hover, .nav-links a.active { color: #38bdf8; }
+        .user-badge { background-color: #0284c7; color: white; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+
+        /* BANNER */
+        .top-banner { background-color: #1e1b4b; color: #f1f5f9; border-top: 2px solid #0284c7; border-bottom: 1px solid #1e293b; padding: 6px 20px; font-size: 0.8rem; display: flex; justify-content: center; gap: 30px; }
+
+        /* MAIN CONTAINER */
+        .dashboard-container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
+
+        /* HEADER DASHBOARD */
+        .dashboard-header { background-color: #131b2a; border: 1px solid #1e293b; border-radius: 8px; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .user-welcome { display: flex; align-items: center; gap: 15px; }
+        .logo-icon { font-size: 2rem; color: #0284c7; }
+        .status-badge { display: inline-block; font-size: 0.75rem; margin-top: 5px; padding: 2px 8px; border-radius: 12px; }
+        .status-badge.off-duty { background-color: #334155; color: #94a3b8; }
+
+        /* BOTTONI */
+        .btn { padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-secondary { background-color: #334155; color: white; }
+        .btn-outline { background-color: transparent; border: 1px solid #475569; color: white; }
+        .btn-primary { background-color: #0284c7; color: white; }
+
+        /* GRID LAYOUT */
+        .dashboard-grid { display: grid; grid-template-columns: 320px 1fr; gap: 20px; }
+
+        /* PROFILO SINISTRA */
+        .profile-card { background-color: #131b2a; border: 1px solid #1e293b; border-radius: 8px; padding: 20px; }
+        .card-title { font-weight: 600; margin-bottom: 15px; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
+        .card-title small { display: block; color: #64748b; font-weight: 400; font-size: 0.75rem; }
+        .avatar-container { text-align: center; margin-bottom: 20px; }
+        .avatar-wrapper { position: relative; width: 110px; height: 110px; margin: 15px auto; }
+        .avatar-img { width: 100%; height: 100%; border-radius: 8px; object-fit: cover; border: 2px solid #0284c7; }
+        .edit-avatar-btn { position: absolute; top: -5px; right: -5px; background-color: #0284c7; border: none; color: white; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; }
+        .badge-matricola { background-color: #1e293b; color: #f59e0b; border: 1px solid #d97706; padding: 6px; border-radius: 4px; margin-top: 10px; font-size: 0.85rem; }
+
+        /* CAMPI SCHEDA */
+        .profile-fields { display: flex; flex-direction: column; gap: 10px; }
+        .field-group label { display: block; font-size: 0.75rem; color: #64748b; margin-bottom: 3px; }
+        .field-group input { width: 100%; background-color: #0f172a; border: 1px solid #1e293b; color: #cbd5e1; padding: 8px; border-radius: 4px; font-size: 0.85rem; }
+        .tag { background-color: #1e293b; color: #38bdf8; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; display: inline-block; }
+
+        /* SCHEDE DESTRA */
+        .status-box { background-color: #131b2a; border: 1px solid #1e293b; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+        .module-card { background-color: #131b2a; border: 1px solid #1e293b; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
+        .module-card:hover { transform: translateY(-3px); border-color: #0284c7; }
+        .module-icon { font-size: 1.8rem; color: #38bdf8; margin-bottom: 12px; }
+        .module-card h4 { font-size: 0.95rem; margin-bottom: 6px; color: #f8fafc; }
+        .module-card p { font-size: 0.75rem; color: #64748b; }
+    </style>
 </head>
 <body>
 
-    <!-- BARRA SUPERIORE (NAVBAR) -->
+    <!-- NAVBAR -->
     <header class="navbar">
         <div class="logo-section">
-            <img src="./assets/logo-polizia.png" alt="Logo Polizia" class="logo-img" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg'">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg" alt="Logo Polizia" class="logo-img">
             <span class="logo-title">POLIZIA DI STATO</span>
         </div>
         <nav class="nav-links">
@@ -31,13 +91,13 @@
         </div>
     </header>
 
-    <!-- BANNER AVVISI / EMERGENZE -->
+    <!-- BANNER -->
     <div class="top-banner">
         <span><i class="fa-solid fa-phone"></i> Emergenze: <strong>112</strong> (Servizio attivo 24/7)</span>
-        <span><i class="fa-brands fa-discord"></i> Server Discord Ufficiale Polizia di Stato</span>
+        <span><i class="fa-brands fa-discord"></i> Server Discord Ufficiale</span>
     </div>
 
-    <!-- CONTENITORE DASHBOARD -->
+    <!-- MAIN -->
     <main class="dashboard-container">
 
         <!-- HEADER AREA PERSONALE -->
@@ -56,10 +116,10 @@
             </div>
         </div>
 
-        <!-- LAYOUT 2 COLONNE -->
+        <!-- GRID -->
         <div class="dashboard-grid">
 
-            <!-- COLONNA SINISTRA: DATI AGENTE -->
+            <!-- SINISTRA -->
             <aside class="profile-card">
                 <div class="card-title">
                     <i class="fa-solid fa-id-card"></i> I miei dati
@@ -67,14 +127,12 @@
                 </div>
 
                 <div class="avatar-container">
-                    <button class="btn-icon notify-btn" title="Attiva notifiche"><i class="fa-solid fa-bell"></i> Attiva notifiche</button>
                     <div class="avatar-wrapper">
-                        <img src="./assets/avatar-default.jpg" alt="Foto Agente" class="avatar-img" onerror="this.src='https://ui-avatars.com/api/?name=Ethan+Buzzi&background=0284c7&color=fff&size=128'">
+                        <img src="https://ui-avatars.com/api/?name=Ethan+Buzzi&background=0284c7&color=fff&size=128" alt="Foto Agente" class="avatar-img">
                         <button class="edit-avatar-btn"><i class="fa-solid fa-pencil"></i></button>
                     </div>
                     <h3>Ethan Buzzi</h3>
-                    <p class="role-subtitle">Agente Scelto</p>
-                    <a href="#" class="link-small">Regola posizione foto</a>
+                    <p style="color: #64748b; font-size: 0.85rem;">Agente Scelto</p>
                     <div class="badge-matricola">MATRICOLA: <strong>PDS-134</strong></div>
                 </div>
 
@@ -105,26 +163,24 @@
                     </div>
                     <div class="field-group">
                         <label>Specializzazioni</label>
-                        <div class="tags-container">
+                        <div>
                             <span class="tag"><i class="fa-solid fa-motorcycle"></i> Squadra Volante</span>
                         </div>
                     </div>
                 </div>
             </aside>
 
-            <!-- COLONNA DESTRA: SERVIZI / MODULI POLIZIA -->
+            <!-- DESTRA -->
             <section class="main-content">
 
-                <!-- STATUS BANNER -->
                 <div class="status-box">
-                    <div class="status-info">
-                        <strong>Agente Scelto</strong>
-                        <span>Ethan Buzzi - @Ethan.Buzzi</span>
+                    <div>
+                        <strong>Agente Scelto</strong><br>
+                        <span style="font-size: 0.8rem; color: #64748b;">Ethan Buzzi - @Ethan.Buzzi</span>
                     </div>
                     <button class="btn btn-primary"><i class="fa-solid fa-rotate"></i> Aggiorna profilo / grado</button>
                 </div>
 
-                <!-- GRIGLIA SCHEDE -->
                 <div class="modules-grid">
 
                     <div class="module-card">
@@ -211,6 +267,5 @@
         </div>
     </main>
 
-    <script src="./js/script.js"></script>
 </body>
 </html>
