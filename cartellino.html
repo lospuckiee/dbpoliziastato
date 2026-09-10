@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Cartellino Presenze — Polizia di Stato</title>
+    
+    <!-- Font & FontAwesome Icone -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-body: #06090e;
+            --card-bg: rgba(13, 18, 30, 0.75);
+            --card-border: rgba(255, 255, 255, 0.07);
+            --accent-blue: #2563eb;
+            --accent-cyan: #0284c7;
+            --accent-green: #10b981;
+            --accent-red: #f43f5e;
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* HEADER STYLING */
+        .header-bar {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 16px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand-zone {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 12px rgba(59, 130, 246, 0.2);
+        }
+
+        .brand-icon img {
+            height: 32px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .brand-titles h1 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-titles span {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* BTN STYLES */
+        .btn-action {
+            background: rgba(30, 41, 59, 0.6);
+            color: #f8fafc;
+            border: 1px solid var(--card-border);
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-action:hover {
+            background: rgba(51, 65, 85, 0.8);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: rgba(244, 63, 94, 0.12);
+            color: #fda4af;
+            border: 1px solid rgba(244, 63, 94, 0.25);
+        }
+
+        .btn-danger:hover {
+            background: rgba(244, 63, 94, 0.25);
+            border-color: rgba(244, 63, 94, 0.4);
+        }
+
+        /* GRID LAYOUT */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 20px;
+        }
+
+        .card-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* INPUT FIELD DESIGN */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .custom-input {
+            background: #020617;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .custom-input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        /* TIMER DISPLAY HUD */
+        .timer-hud {
+            background: radial-gradient(circle, rgba(15, 23, 42, 0.8) 0%, rgba(2, 6, 23, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 36px 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+        }
+
+        .badge-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: rgba(30, 41, 59, 0.8);
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .badge-status.active {
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .badge-status.active .status-dot {
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+
+        .timer-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 4.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1;
+            color: #ffffff;
+            text-shadow: 0 0 35px rgba(255, 255, 255, 0.15);
+            margin-bottom: 10px;
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .stat-box {
+            background: rgba(2, 6, 23, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* HISTORIC LIST */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 260px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .history-list::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+
+        .history-item {
+            background: rgba(2, 6, 23, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        /* RIGHT SIDEBAR ACTIVE USERS */
+        .sidebar-live {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .user-live-card {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- BARRA SUPERIORE -->
+    <header class="header-bar">
+        <div class="brand-zone">
+            <div class="brand-icon">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg" alt="Polizia Emblem">
+            </div>
+            <div class="brand-titles">
+                <h1>Gestione Cartellino</h1>
+                <span>Polizia di Stato — Controllo Operativo</span>
+            </div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn-action" onclick="window.history.back()">
+                <i class="fa-solid fa-arrow-left"></i> Dashboard
+            </button>
+            <button class="btn-action btn-danger" id="btnResetTotali" title="Azzera storico e dati salvati localmente">
+                <i class="fa-solid fa-trash-can"></i> Reset Dati
+            </button>
+        </div>
+    </header>
+
+    <!-- LAYOUT PRINCIPALE -->
+    <main class="main-grid">
+
+        <!-- COLONNA DI SINISTRA (MAIN CONTROLS) -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            
+            <!-- DATI UTENTE -->
+            <div class="card-panel">
+                <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: flex-end;">
+                    <div class="input-group">
+                        <label class="input-label">Nome Operatore *</label>
+                        <input type="text" id="cartellinoNome" class="custom-input" placeholder="Es. Eric Guidi">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Discord ID / Matricola</label>
+                        <input type="text" id="cartellinoDiscord" class="custom-input" placeholder="Es. 1292573195408507014">
+                    </div>
+                    <button class="btn-action" id="btnSalvaProfilo" style="background: var(--accent-blue); border: none; padding: 11px 20px;">
+                        <i class="fa-solid fa-floppy-disk"></i> Salva
+                    </button>
+                </div>
+            </div>
+
+            <!-- DIGITAL TIMER HUD -->
+            <div class="timer-hud">
+                <div id="badgeStatoTurno" class="badge-status">
+                    <span class="status-dot"></span>
+                    <span id="txtBadgeStatus">FUORI SERVIZIO</span>
+                </div>
+
+                <div id="cartellinoDisplayTimer" class="timer-time">00:00:00</div>
+                <p id="subtextTimer" style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 24px; font-weight: 500;">
+                    Premi "Avvia Turno" per registrarti in servizio.
+                </p>
+
+                <div style="display: flex; justify-content: center; gap: 14px;">
+                    <button id="btnAvviaTurno" class="btn-action" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; padding: 14px 28px; font-size: 0.95rem; font-weight: 700; box-shadow: 0 8px 20px -4px rgba(16, 185, 129, 0.4);">
+                        <i class="fa-solid fa-play"></i> Avvia Turno
+                    </button>
+                    <button id="btnTerminaTurno" class="btn-action" disabled style="background: rgba(244, 63, 94, 0.15); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.2); padding: 14px 28px; font-size: 0.95rem; font-weight: 700; opacity: 0.5; cursor: not-allowed;">
+                        <i class="fa-solid fa-square"></i> Termina Turno
+                    </button>
+                </div>
+            </div>
+
+            <!-- RECAP STATISTICHE CUMULATIVE PERMANENTI -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="input-label">Ore Settimana</span>
+                    <strong id="statOreSettimana" class="stat-val" style="color: var(--accent-green);">0h 0m</strong>
+                </div>
+                <div class="stat-box">
+                    <span class="input-label">Ore Totali (Sempre)</span>
+                    <strong id="statOreTotali" class="stat-val" style="color: #38bdf8;">0h 0m</strong>
+                </div>
+                <div class="stat-box">
+                    <span class="input-label">Turni Settimana</span>
+                    <strong id="statTurniSettimana" class="stat-val" style="color: #f43f5e;">0</strong>
+                </div>
+            </div>
+
+            <!-- STORICO PERMANENTE -->
+            <div class="card-panel">
+                <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 16px; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-clock-rotate-left" style="color: var(--accent-cyan);"></i> Storico Servizi Registrati
+                </h3>
+                <div id="storicoTurniContainer" class="history-list">
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">Nessun turno salvato nello storico.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- COLONNA DI DESTRA (LIVE STATUS SIDEBAR) -->
+        <div class="card-panel sidebar-live">
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 0.95rem; font-weight: 700; color: var(--accent-green); display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-user-shield"></i> Stato Servizio
+                    </span>
+                    <span style="background: rgba(16, 185, 129, 0.15); color: #34d399; font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(16, 185, 129, 0.3);">LIVE</span>
+                </div>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Elenco presenze attive al momento</span>
+            </div>
+
+            <div style="background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 10px;">
+                <span id="txtContatoreOperatori" style="font-size: 0.8rem; font-weight: 600; color: #94a3b8;">Nessun operatore in servizio</span>
+            </div>
+
+            <!-- LISTA UTENTI ATTIVI -->
+            <div id="listaOperatoriAttivi" style="display: flex; flex-direction: column; gap: 10px;">
+                <!-- Gli operatori in turno verranno renderizzati qui dinamicamente -->
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- JAVASCRIPT LOGIC CON SALVATAGGIO IN LOCALSTORAGE PERMANENTE -->
+<script>
+    // CHIAVI PER LOCALSTORAGE
+    const STORAGE_KEY_PROFILE = 'polizia_cartellino_profile';
+    const STORAGE_KEY_STATS = 'polizia_cartellino_stats';
+    const STORAGE_KEY_HISTORY = 'polizia_cartellino_history';
+    const STORAGE_KEY_ACTIVE_TURNO = 'polizia_cartellino_active_shift';
+
+    // Riferimenti DOM
+    const btnAvviaTurno = document.getElementById('btnAvviaTurno');
+    const btnTerminaTurno = document.getElementById('btnTerminaTurno');
+    const btnSalvaProfilo = document.getElementById('btnSalvaProfilo');
+    const btnResetTotali = document.getElementById('btnResetTotali');
+
+    const displayTimer = document.getElementById('cartellinoDisplayTimer');
+    const badgeStatoTurno = document.getElementById('badgeStatoTurno');
+    const txtBadgeStatus = document.getElementById('txtBadgeStatus');
+    const subtextTimer = document.getElementById('subtextTimer');
+
+    const inputNome = document.getElementById('cartellinoNome');
+    const inputDiscord = document.getElementById('cartellinoDiscord');
+
+    const statOreSettimana = document.getElementById('statOreSettimana');
+    const statOreTotali = document.getElementById('statOreTotali');
+    const statTurniSettimana = document.getElementById('statTurniSettimana');
+
+    const storicoTurniContainer = document.getElementById('storicoTurniContainer');
+    const listaOperatoriAttivi = document.getElementById('listaOperatoriAttivi');
+    const txtContatoreOperatori = document.getElementById('txtContatoreOperatori');
+
+    // STATO APPLICAZIONE
+    let timerInterval = null;
+    let secondiTrascorsi = 0;
+    let orarioInizioTimestamp = null;
+    let orarioInizioStr = '';
+
+    let stats = {
+        secondiSettimana: 0,
+        secondiTotali: 0,
+        turniSettimana: 0
+    };
+
+    let storico = [];
+
+    // FORMATTATORI
+    function formattaTempo(sec) {
+        const h = Math.floor(sec / 3600).toString().padStart(2, '0');
+        const m = Math.floor((sec % 3600) / 60).toString().padStart(2, '0');
+        const s = (sec % 60).toString().padStart(2, '0');
+        return `${h}:${m}:${s}`;
+    }
+
+    function formattaOreMinuti(sec) {
+        const h = Math.floor(sec / 3600);
+        const m = Math.floor((sec % 3600) / 60);
+        return `${h}h ${m}m`;
+    }
+
+    // CARICAMENTO INIZIALE DATI
+    document.addEventListener('DOMContentLoaded', () => {
+        caricaProfilo();
+        caricaStatistiche();
+        caricaStorico();
+        verificaturnoAttivoInCorso();
+    });
+
+    // GESTIONE PROFILO
+    function caricaProfilo() {
+        const salvato = JSON.parse(localStorage.getItem(STORAGE_KEY_PROFILE));
+        if (salvato) {
+            inputNome.value = salvato.nome || '';
+            inputDiscord.value = salvato.discord || '';
+        } else {
+            inputNome.value = 'Eric Guidi';
+            inputDiscord.value = '1292573195408507014';
+        }
+    }
+
+    btnSalvaProfilo.addEventListener('click', () => {
+        const profilo = {
+            nome: inputNome.value.trim(),
+            discord: inputDiscord.value.trim()
+        };
+        localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(profilo));
+        alert('Profilo salvato correttamente!');
+        if(document.getElementById('cardMiaPresenza')) {
+            document.getElementById('txtMiaPresenzaNome').innerText = profilo.nome + ' (Tu)';
+        }
+    });
+
+    // GESTIONE STATISTICHE E STORICO
+    function caricaStatistiche() {
+        const salvato = JSON.parse(localStorage.getItem(STORAGE_KEY_STATS));
+        if (salvato) stats = salvato;
+        aggiornaDisplayStatistiche();
+    }
+
+    function salvaStatistiche() {
+        localStorage.setItem(STORAGE_KEY_STATS, JSON.stringify(stats));
+        aggiornaDisplayStatistiche();
+    }
+
+    function aggiornaDisplayStatistiche() {
+        statOreSettimana.innerText = formattaOreMinuti(stats.secondiSettimana);
+        statOreTotali.innerText = formattaOreMinuti(stats.secondiTotali);
+        statTurniSettimana.innerText = stats.turniSettimana;
+    }
+
+    function caricaStorico() {
+        const salvato = JSON.parse(localStorage.getItem(STORAGE_KEY_HISTORY));
+        if (salvato) storico = salvato;
+        renderStorico();
+    }
+
+    function renderStorico() {
+        if (storico.length === 0) {
+            storicoTurniContainer.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem;">Nessun turno salvato nello storico.</p>`;
+            return;
+        }
+
+        storicoTurniContainer.innerHTML = storico.map(item => `
+            <div class="history-item">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <i class="fa-solid fa-circle-check" style="color: var(--accent-green); font-size: 1.1rem;"></i>
+                    <div>
+                        <div style="color: var(--text-main); font-weight: 700;">Turno del ${item.data}</div>
+                        <div style="color: var(--text-muted); font-size: 0.78rem;">Orario: ${item.inizio} - ${item.fine}</div>
+                    </div>
+                </div>
+                <div style="font-family: 'JetBrains Mono', monospace; color: var(--accent-cyan); font-weight: 700;">
+                    ${item.durata}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // LOGICA AVVIO / TERMINA TURNO
+    btnAvviaTurno.addEventListener('click', () => {
+        const nome = inputNome.value.trim() || 'Operatore';
+        orarioInizioTimestamp = Date.now();
+        orarioInizioStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // Salviamo lo stato del turno attivo per il refresh della pagina
+        const activeShift = {
+            startTimestamp: orarioInizioTimestamp,
+            startTimeStr: orarioInizioStr,
+            nome: nome
+        };
+        localStorage.setItem(STORAGE_KEY_ACTIVE_TURNO, JSON.stringify(activeShift));
+
+        startTimerUI(activeShift);
+    });
+
+    function startTimerUI(shiftData) {
+        btnAvviaTurno.disabled = true;
+        btnAvviaTurno.style.opacity = '0.5';
+        btnAvviaTurno.style.cursor = 'not-allowed';
+
+        btnTerminaTurno.disabled = false;
+        btnTerminaTurno.style.opacity = '1';
+        btnTerminaTurno.style.cursor = 'pointer';
+        btnTerminaTurno.style.background = 'linear-gradient(135deg, #f43f5e 0%, #e11d48 100%)';
+        btnTerminaTurno.style.color = '#ffffff';
+
+        badgeStatoTurno.classList.add('active');
+        txtBadgeStatus.innerText = 'IN SERVIZIO';
+
+        subtextTimer.innerText = `Turno iniziato alle ore ${shiftData.startTimeStr}`;
+
+        aggiungiOperatoreInServizio(shiftData.nome, shiftData.startTimeStr);
+
+        // Timer Loop
+        if (timerInterval) clearInterval(timerInterval);
+        
+        timerInterval = setInterval(() => {
+            const ora = Date.now();
+            secondiTrascorsi = Math.floor((ora - shiftData.startTimestamp) / 1000);
+            
+            displayTimer.innerText = formattaTempo(secondiTrascorsi);
+            
+            const myTimerCard = document.getElementById('myLiveTimer');
+            if (myTimerCard) myTimerCard.innerText = formattaTempo(secondiTrascorsi);
+        }, 1000);
+    }
+
+    btnTerminaTurno.addEventListener('click', () => {
+        const activeShift = JSON.parse(localStorage.getItem(STORAGE_KEY_ACTIVE_TURNO));
+        if (!activeShift) return;
+
+        clearInterval(timerInterval);
+
+        const oraAttuale = new Date();
+        const orarioFineStr = oraAttuale.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const dataStr = oraAttuale.toLocaleDateString();
+
+        // Accumula dati
+        stats.secondiSettimana += secondiTrascorsi;
+        stats.secondiTotali += secondiTrascorsi;
+        stats.turniSettimana += 1;
+        salvaStatistiche();
+
+        // Inserisci nello storico
+        storico.unshift({
+            data: dataStr,
+            inizio: activeShift.startTimeStr,
+            fine: orarioFineStr,
+            durata: formattaTempo(secondiTrascorsi)
+        });
+        localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(storico));
+        renderStorico();
+
+        // Pulisci turno attivo salvato
+        localStorage.removeItem(STORAGE_KEY_ACTIVE_TURNO);
+
+        // Reset UI
+        rimuoviOperatoreInServizio();
+        displayTimer.innerText = "00:00:00";
+        
+        btnAvviaTurno.disabled = false;
+        btnAvviaTurno.style.opacity = '1';
+        btnAvviaTurno.style.cursor = 'pointer';
+
+        btnTerminaTurno.disabled = true;
+        btnTerminaTurno.style.opacity = '0.5';
+        btnTerminaTurno.style.cursor = 'not-allowed';
+        btnTerminaTurno.style.background = 'rgba(244, 63, 94, 0.15)';
+        btnTerminaTurno.style.color = '#fda4af';
+
+        badgeStatoTurno.classList.remove('active');
+        txtBadgeStatus.innerText = 'FUORI SERVIZIO';
+
+        subtextTimer.innerText = 'Premi "Avvia Turno" per registrarti in servizio.';
+    });
+
+    // VERIFICA SE UN TURNO ERA GIÀ IN CORSO AL REFRESH
+    function verificaturnoAttivoInCorso() {
+        const activeShift = JSON.parse(localStorage.getItem(STORAGE_KEY_ACTIVE_TURNO));
+        if (activeShift) {
+            startTimerUI(activeShift);
+        }
+    }
+
+    // OPERATORI LIVE SIDEBAR
+    function aggiungiOperatoreInServizio(nome, inizio) {
+        rimuoviOperatoreInServizio();
+        const cardHtml = `
+            <div id="cardMiaPresenza" class="user-live-card">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 8px; color: #f8fafc; font-weight: 700; font-size: 0.9rem;">
+                        <span class="status-dot" style="background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green);"></span>
+                        <span id="txtMiaPresenzaNome">${nome} (Tu)</span>
+                    </div>
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 8px; padding-left: 16px;">
+                    Inizio: <span style="color: #cbd5e1;">${inizio}</span><br>
+                    <strong id="myLiveTimer" style="color: var(--accent-green); font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; display: inline-block; margin-top: 4px;">00:00:00</strong>
+                </div>
+            </div>
+        `;
+        listaOperatoriAttivi.insertAdjacentHTML('afterbegin', cardHtml);
+        aggiornaContatore();
+    }
+
+    function rimuoviOperatoreInServizio() {
+        const el = document.getElementById('cardMiaPresenza');
+        if (el) el.remove();
+        aggiornaContatore();
+    }
+
+    function aggiornaContatore() {
+        const tot = listaOperatoriAttivi.children.length;
+        if (tot === 0) {
+            txtContatoreOperatori.innerText = 'Nessun operatore in servizio';
+        } else {
+            txtContatoreOperatori.innerText = `${tot} ${tot === 1 ? 'operatore in servizio' : 'operatori in servizio'}`;
+        }
+    }
+
+    // RESET PERMANENTE
+    btnResetTotali.addEventListener('click', () => {
+        if (confirm("Sei sicuro di voler azzerare permanentemente tutte le statistiche e lo storico?")) {
+            localStorage.clear();
+            location.reload();
+        }
+    });
+</script>
+
+</body>
+</html>
