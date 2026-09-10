@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // GESTIONE ACCESSING FORM LOGIN
+    // GESTIONE ACCESSO FORM LOGIN
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const passInput = document.getElementById('password').value.trim();
             const errorBox = document.getElementById('login-error');
 
-            // Cerca l'agente (confronto non sensibile alle maiuscole/minuscole per comodità)
+            // Cerca l'agente (confronto non sensibile alle maiuscole/minuscole)
             const agenteTrovato = agentiDatabase.find(agente => 
                 agente.username.toLowerCase() === userInput.toLowerCase() && 
                 agente.password.toLowerCase() === passInput.toLowerCase()
@@ -107,10 +107,55 @@ function caricaDashboard(agente) {
     document.getElementById('dash-status-grado').innerText = agente.grado;
     document.getElementById('dash-status-user').innerText = `${agente.nome} ${agente.cognome} - @${agente.username}`;
     
-    // Generatore Avatar
-    document.getElementById('dash-avatar').src = `https://ui-avatars.com/api/?name=${agente.nome}+${agente.cognome}&background=0284c7&color=fff&size=128`;
+    // Generatore Avatar (Sistemato l'ID per farlo funzionare con l'HTML)
+    const fotoEl = document.getElementById('mieiDatiFoto');
+    if (fotoEl) {
+        fotoEl.src = `https://ui-avatars.com/api/?name=${agente.nome}+${agente.cognome}&background=0284c7&color=fff&size=128`;
+    }
 
     // Cambio schermata
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('dashboard-section').style.display = 'block';
+}
+
+// ----------------------------------------------------
+// FUNZIONI PER LA GESTIONE E REGOLAZIONE DELLA FOTO
+// ----------------------------------------------------
+
+// 1. Modifica URL della Foto con la Matita
+function mieiDatiModificaFoto() {
+    const nuovaUrl = prompt("Inserisci l'URL dell'immagine del tuo profilo:");
+    if (nuovaUrl && nuovaUrl.trim() !== "") {
+        const img = document.getElementById('mieiDatiFoto');
+        if (img) {
+            img.src = nuovaUrl.trim();
+        }
+    }
+}
+
+// 2. Mostra/Nascondi il pannello degli slider
+function mieiDatiTogglePosFoto() {
+    const box = document.getElementById('mieiDatiFotoPosBox');
+    if (box) {
+        box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
+    }
+}
+
+// 3. Applica la posizione orizzontale e verticale alla foto
+function mieiDatiApplicaPosFoto() {
+    const posX = document.getElementById('mieiDatiFotoPosX').value;
+    const posY = document.getElementById('mieiDatiFotoPosY').value;
+    const img = document.getElementById('mieiDatiFoto');
+
+    if (img) {
+        img.style.objectFit = 'cover';
+        img.style.objectPosition = `${posX}% ${posY}%`;
+    }
+}
+
+// 4. Ripristina la posizione della foto ai valori di default
+function mieiDatiResetPosFoto() {
+    document.getElementById('mieiDatiFotoPosX').value = 50;
+    document.getElementById('mieiDatiFotoPosY').value = 30;
+    mieiDatiApplicaPosFoto();
 }
