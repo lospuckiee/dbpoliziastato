@@ -264,7 +264,91 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+// Funzione per ridimensionare e comprimere le immagini lato client prima dell'upload
+function comprimiImmagine(file, maxWidth = 400, maxHeight = 400, qualita = 0.7) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
 
+                // Calcolo delle nuove dimensioni mantenendo le proporzioni
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width = Math.round((width * maxHeight) / height);
+                        height = maxHeight;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Restituisce l'immagine compressa in formato DataURL JPEG leggero
+                resolve(canvas.toDataURL('image/jpeg', qualita));
+            };
+            img.onerror = (err) => reject(err);
+        };
+        reader.onerror = (err) => reject(err);
+    });
+}
+
+// Esempio di gestione dell'evento di modifica foto ottimizzato
+const btnEditAvatar = document.getElementById('btnEditAvatar');
+if (btnEditAvatar) {
+    btnEditAvatar.addEventListener('click', async () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Mostra loader
+            const loader = document.getElementById('loading-overlay');
+            if (loader) loader.style.display = 'flex';
+
+            try {
+                // Comprime l'immagine prima di elaborarla
+                const base64Ottimizzato = await comprimiImmagine(file);
+                
+                // Aggiorna l'anteprima avatar immediatamente
+                document.getElementById('mieiDatiFoto').src = base64Ottimizzato;
+
+                // QUI: inserisci la tua chiamata API o fetch() per salvare i dati
+                /*
+                await fetch('/api/salva-foto', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ foto: base64Ottimizzato })
+                });
+                */
+
+            } catch (error) {
+                console.error("Errore durante la compressione:", error);
+                alert("Si è verificato un errore durante l'elaborazione dell'immagine.");
+            } finally {
+                // Nasconde loader
+                if (loader) loader.style.display = 'none';
+            }
+        };
+
+        input.click();
+    });
+}
 // FUNZIONE PER APPLICARE E SALVARE LA POSIZIONE DELLA FOTO
 function applicaESalvaPosFoto() {
     const posX = document.getElementById('mieiDatiFotoPosX')?.value || 50;
