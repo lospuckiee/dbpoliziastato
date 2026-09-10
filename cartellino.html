@@ -587,6 +587,9 @@
         };
         localStorage.setItem(STORAGE_KEY_ACTIVE_TURNO, JSON.stringify(activeShift));
 
+        // Aggiorna lo stato globale del servizio per la Dashboard
+        localStorage.setItem('statoServizio', 'in_servizio');
+
         startTimerUI(activeShift);
     });
 
@@ -651,6 +654,9 @@
         // Pulisci turno attivo salvato
         localStorage.removeItem(STORAGE_KEY_ACTIVE_TURNO);
 
+        // Aggiorna lo stato globale del servizio per la Dashboard
+        localStorage.setItem('statoServizio', 'fuori_servizio');
+
         // Reset UI
         rimuoviOperatoreInServizio();
         displayTimer.innerText = "00:00:00";
@@ -675,7 +681,10 @@
     function verificaturnoAttivoInCorso() {
         const activeShift = JSON.parse(localStorage.getItem(STORAGE_KEY_ACTIVE_TURNO));
         if (activeShift) {
+            localStorage.setItem('statoServizio', 'in_servizio');
             startTimerUI(activeShift);
+        } else {
+            localStorage.setItem('statoServizio', 'fuori_servizio');
         }
     }
 
@@ -719,6 +728,7 @@
     btnResetTotali.addEventListener('click', () => {
         if (confirm("Sei sicuro di voler azzerare permanentemente tutte le statistiche e lo storico?")) {
             localStorage.clear();
+            localStorage.setItem('statoServizio', 'fuori_servizio');
             location.reload();
         }
     });
