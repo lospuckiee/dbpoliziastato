@@ -59,7 +59,7 @@
                 <span class="logo-title">POLIZIA DI STATO</span>
             </div>
             <nav class="nav-links">
-                <a href="#" class="active">HOME</a>
+                <a href="#" class="active" id="navHomeLink">HOME</a>
             </nav>
             <div class="user-badge">
                 <i class="fa-solid fa-shield-halved"></i> MDC Operativo
@@ -72,120 +72,244 @@
         </div>
 
         <main class="dashboard-container">
-            <div class="dashboard-header">
-                <div class="user-welcome">
-                    <i class="fa-solid fa-shield-halved logo-icon"></i>
-                    <div>
-                        <h2>Area Personale</h2>
-                        <p><span id="dash-greeting">Buongiorno</span>, <strong id="dash-fullname">Agente</strong></p>
-                        <span class="status-badge off-duty"><i class="fa-solid fa-circle"></i> Fuori servizio</span>
+            
+            <!-- VISTA HOME DASHBOARD -->
+            <div id="main-dashboard-view">
+                <div class="dashboard-header">
+                    <div class="user-welcome">
+                        <i class="fa-solid fa-shield-halved logo-icon"></i>
+                        <div>
+                            <h2>Area Personale</h2>
+                            <p><span id="dash-greeting">Buongiorno</span>, <strong id="dash-fullname">Agente</strong></p>
+                            <span class="status-badge off-duty" id="dashStatusBadge"><i class="fa-solid fa-circle"></i> Fuori servizio</span>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" id="btnOpenChangePassword"><i class="fa-solid fa-key"></i> Cambia password</button>
+                        <button class="btn btn-outline" id="btnLogout"><i class="fa-solid fa-right-from-bracket"></i> Esci</button>
                     </div>
                 </div>
-                <div class="header-actions">
-                    <button class="btn btn-secondary" id="btnOpenChangePassword"><i class="fa-solid fa-key"></i> Cambia password</button>
-                    <button class="btn btn-outline" id="btnLogout"><i class="fa-solid fa-right-from-bracket"></i> Esci</button>
+
+                <div class="dashboard-grid">
+                    <aside class="profile-card">
+                        <div class="card-title">
+                            <i class="fa-solid fa-id-card"></i> I miei dati
+                            <small>Dati del tuo account (sola lettura).</small>
+                        </div>
+
+                        <!-- AVATAR E MODIFICA FOTO -->
+                        <div class="avatar-container">
+                            <div class="avatar-wrapper" style="width: 180px; height: 180px; margin: 0 auto; position: relative;">
+                                <img id="mieiDatiFoto" src="https://via.placeholder.com/180" alt="Foto Agente" class="avatar-img" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                                <button type="button" class="edit-avatar-btn" id="btnEditAvatar" title="Inserisci URL Imgur">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </button>
+                            </div>
+
+                            <!-- REGOLAZIONE POSIZIONE FOTO -->
+                            <div class="foto-controls" style="margin-top: 15px;">
+                                <button type="button" id="mieiDatiFotoPosToggle" class="btn-toggle-pos" style="background-color: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 8px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-sliders"></i> Regola posizione foto
+                                </button>
+
+                                <div id="mieiDatiFotoPosBox" class="foto-pos-box" style="display: none; background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 15px; margin-top: 10px; text-align: left;">
+                                    <div class="pos-control-group" style="margin-bottom: 10px;">
+                                        <label for="mieiDatiFotoPosX" style="font-size: 0.85rem; font-weight: 600; color: #0369a1;">Orizzontale (X):</label>
+                                        <input type="range" id="mieiDatiFotoPosX" min="0" max="100" value="50" style="width: 100%;">
+                                    </div>
+                                    <div class="pos-control-group" style="margin-bottom: 10px;">
+                                        <label for="mieiDatiFotoPosY" style="font-size: 0.85rem; font-weight: 600; color: #0369a1;">Verticale (Y):</label>
+                                        <input type="range" id="mieiDatiFotoPosY" min="0" max="100" value="30" style="width: 100%;">
+                                    </div>
+                                    <button type="button" id="btnResetPosFoto" class="btn-reset-pos" style="background-color: #0284c7; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; width: 100%;">
+                                        <i class="fa-solid fa-rotate-left"></i> Ripristina Posizione
+                                    </button>
+                                </div>
+                            </div>
+
+                            <h3 id="dash-card-name" style="margin-top: 15px;">Agente</h3>
+                            <p id="dash-card-grado-sub" style="color: #64748b; font-size: 0.85rem;">Grado</p>
+                            <div class="badge-matricola">MATRICOLA: <strong id="dash-matricola">PDS-000</strong></div>
+                        </div>
+
+                        <div class="profile-fields">
+                            <div class="field-group">
+                                <label for="dash-username">Username</label>
+                                <input type="text" id="dash-username" readonly>
+                            </div>
+                            <div class="field-group">
+                                <label for="dash-nome">Nome</label>
+                                <input type="text" id="dash-nome" readonly>
+                            </div>
+                            <div class="field-group">
+                                <label for="dash-cognome">Cognome</label>
+                                <input type="text" id="dash-cognome" readonly>
+                            </div>
+                            <div class="field-group">
+                                <label for="dash-discord">Discord ID</label>
+                                <input type="text" id="dash-discord" readonly>
+                            </div>
+                            <div class="field-group">
+                                <label for="dash-grado">Grado</label>
+                                <input type="text" id="dash-grado" readonly>
+                            </div>
+                            <div class="field-group">
+                                <label for="dash-mansione">Mansione</label>
+                                <input type="text" id="dash-mansione" readonly>
+                            </div>
+                            <div class="field-group">
+                                <label>Specializzazioni</label>
+                                <div>
+                                    <span class="tag" id="dash-spec"><i class="fa-solid fa-shield"></i> Squadra Volante</span>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <section class="main-content">
+                        <div class="status-box">
+                            <div>
+                                <strong id="dash-status-grado">Grado</strong><br>
+                                <span style="font-size: 0.8rem; color: #64748b;" id="dash-status-user">Nome Cognome - @User</span>
+                            </div>
+                            <button class="btn btn-primary" id="btnUpdateProfile"><i class="fa-solid fa-rotate" id="iconUpdateProfile"></i> Aggiorna profilo / grado</button>
+                        </div>
+
+                        <div class="modules-grid">
+                            <!-- CARTA "TIMBRA CARTELLINO" CHE APRE LA SEZIONE -->
+                            <div class="module-card" id="cardOpenCartellino" style="cursor: pointer;">
+                                <i class="fa-regular fa-clock module-icon"></i>
+                                <h4>Timbra Cartellino</h4>
+                                <p>Avvia/termina turno e registra le ore</p>
+                            </div>
+                            <div class="module-card">
+                                <i class="fa-solid fa-id-card-clip module-icon"></i>
+                                <h4>Porto d'Armi & Licenze</h4>
+                                <p>Verifica e rilascio licenze armi</p>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
 
-            <div class="dashboard-grid">
-                <aside class="profile-card">
-                    <div class="card-title">
-                        <i class="fa-solid fa-id-card"></i> I miei dati
-                        <small>Dati del tuo account (sola lettura).</small>
+            <!-- SEZIONE TIMBRA CARTELLINO (FEDELE ALLA FOTO E ADATTATA POLIZIA DI STATO) -->
+            <section id="cartellino-section" style="display: none; width: 100%; max-width: 1200px; margin: 0 auto; padding-top: 10px;">
+                
+                <!-- INTESTAZIONE CARTELLINO CON PULSANTI AZIONE -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="assets/logo-polizia.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/23/Stemma_Polizia_di_Stato.svg'" alt="Logo Polizia" style="height: 42px;">
+                        <h1 style="color: #f8fafc; font-size: 1.8rem; font-weight: 700; margin: 0; letter-spacing: 0.5px;">Timbra Cartellino</h1>
                     </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn" id="btnBackToDash" style="background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 9px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+                            <i class="fa-solid fa-arrow-left"></i> Dashboard
+                        </button>
+                        <button class="btn" id="btnCartellinoLogout" style="background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 9px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+                            <i class="fa-solid fa-right-from-bracket"></i> Esci
+                        </button>
+                    </div>
+                </div>
 
-                    <!-- AVATAR E MODIFICA FOTO -->
-                    <div class="avatar-container">
-                        <div class="avatar-wrapper" style="width: 180px; height: 180px; margin: 0 auto; position: relative;">
-                            <img id="mieiDatiFoto" src="https://via.placeholder.com/180" alt="Foto Agente" class="avatar-img" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
-                            <button type="button" class="edit-avatar-btn" id="btnEditAvatar" title="Inserisci URL Imgur">
-                                <i class="fa-solid fa-pencil"></i>
-                            </button>
+                <!-- GRIGLIA A DUE COLONNE (MAIN 75% | SIDEBAR IN SERVIZIO 25%) -->
+                <div style="display: grid; grid-template-columns: 1fr 300px; gap: 20px; align-items: start;">
+                    
+                    <!-- COLONNA PRINCIPALE (SINISTRA) -->
+                    <div style="display: flex; flex-direction: column; gap: 18px;">
+                        
+                        <!-- CARD INPUT OPERATORE -->
+                        <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 20px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px; align-items: end;">
+                                <div>
+                                    <label style="font-size: 0.85rem; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 8px;">Nome operatore *</label>
+                                    <input type="text" id="cartellinoNome" value="Eric Guidi" style="width: 100%; background: #090d16; border: 1px solid #1e293b; color: #f8fafc; padding: 10px 14px; border-radius: 8px; font-size: 0.95rem; outline: none;">
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.85rem; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 8px;">Discord ID / Matricola</label>
+                                    <input type="text" id="cartellinoDiscord" value="1292573195408507014" style="width: 100%; background: #090d16; border: 1px solid #1e293b; color: #f8fafc; padding: 10px 14px; border-radius: 8px; font-size: 0.95rem; outline: none;">
+                                </div>
+                                <div>
+                                    <button class="btn" style="background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 10px 22px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                                        Salva
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- REGOLAZIONE POSIZIONE FOTO -->
-                        <div class="foto-controls" style="margin-top: 15px;">
-                            <button type="button" id="mieiDatiFotoPosToggle" class="btn-toggle-pos" style="background-color: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 8px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
-                                <i class="fa-solid fa-sliders"></i> Regola posizione foto
-                            </button>
+                        <!-- CARD TIMER CENTRALE -->
+                        <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 40px 20px; text-align: center;">
+                            <div style="display: inline-block; background: #1e293b; color: #94a3b8; padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px;">
+                                Nessun turno attivo
+                            </div>
+                            
+                            <!-- TEMPO PRINCIPALE GRANDISSIMO -->
+                            <div id="cartellinoDisplayTimer" style="font-size: 4rem; font-weight: 800; color: #ffffff; letter-spacing: 2px; line-height: 1; font-family: monospace; margin-bottom: 12px;">
+                                00:00:00
+                            </div>
+                            
+                            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 28px;">Premi Avvia turno per iniziare</p>
 
-                            <div id="mieiDatiFotoPosBox" class="foto-pos-box" style="display: none; background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 15px; margin-top: 10px; text-align: left;">
-                                <div class="pos-control-group" style="margin-bottom: 10px;">
-                                    <label for="mieiDatiFotoPosX" style="font-size: 0.85rem; font-weight: 600; color: #0369a1;">Orizzontale (X):</label>
-                                    <input type="range" id="mieiDatiFotoPosX" min="0" max="100" value="50" style="width: 100%;">
-                                </div>
-                                <div class="pos-control-group" style="margin-bottom: 10px;">
-                                    <label for="mieiDatiFotoPosY" style="font-size: 0.85rem; font-weight: 600; color: #0369a1;">Verticale (Y):</label>
-                                    <input type="range" id="mieiDatiFotoPosY" min="0" max="100" value="30" style="width: 100%;">
-                                </div>
-                                <button type="button" id="btnResetPosFoto" class="btn-reset-pos" style="background-color: #0284c7; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; width: 100%;">
-                                    <i class="fa-solid fa-rotate-left"></i> Ripristina Posizione
+                            <!-- PULSANTI AZIONE AVVIA / TERMINA -->
+                            <div style="display: flex; justify-content: center; gap: 15px;">
+                                <button id="btnAvviaTurno" class="btn" style="background-color: #16a34a; color: white; border: none; padding: 12px 26px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-play"></i> Avvia turno
+                                </button>
+                                <button id="btnTerminaTurno" class="btn" disabled style="background-color: #991b1b; color: #fca5a5; border: none; padding: 12px 26px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: not-allowed; opacity: 0.6; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-square"></i> Termina turno
                                 </button>
                             </div>
                         </div>
 
-                        <h3 id="dash-card-name" style="margin-top: 15px;">Agente</h3>
-                        <p id="dash-card-grado-sub" style="color: #64748b; font-size: 0.85rem;">Grado</p>
-                        <div class="badge-matricola">MATRICOLA: <strong id="dash-matricola">PDS-000</strong></div>
+                        <!-- STATISTICHE H / SETTIMANE -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; text-align: center;">
+                                <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 8px;">Ore settimana</span>
+                                <strong style="font-size: 1.5rem; color: #22c55e;">0h 0m</strong>
+                            </div>
+                            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; text-align: center;">
+                                <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 8px;">Ore totali</span>
+                                <strong style="font-size: 1.5rem; color: #38bdf8;">0h 0m</strong>
+                            </div>
+                            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; text-align: center;">
+                                <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 8px;">Turni sett.</span>
+                                <strong style="font-size: 1.5rem; color: #ef4444;">0</strong>
+                            </div>
+                        </div>
+
+                        <!-- SEZIONE STORICO -->
+                        <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 22px;">
+                            <h4 style="color: #ef4444; font-size: 1rem; margin-bottom: 12px; font-weight: 700;">Storico</h4>
+                            <p style="color: #64748b; font-size: 0.88rem; margin: 0;">Nessun turno.</p>
+                        </div>
                     </div>
 
-                    <div class="profile-fields">
-                        <div class="field-group">
-                            <label for="dash-username">Username</label>
-                            <input type="text" id="dash-username" readonly>
+                    <!-- COLONNA DESTRA (IN SERVIZIO LIVE) -->
+                    <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 8px; color: #22c55e; font-weight: 700; font-size: 1rem; margin-bottom: 4px;">
+                            <i class="fa-solid fa-user-check"></i> In servizio
                         </div>
-                        <div class="field-group">
-                            <label for="dash-nome">Nome</label>
-                            <input type="text" id="dash-nome" readonly>
-                        </div>
-                        <div class="field-group">
-                            <label for="dash-cognome">Cognome</label>
-                            <input type="text" id="dash-cognome" readonly>
-                        </div>
-                        <div class="field-group">
-                            <label for="dash-discord">Discord ID</label>
-                            <input type="text" id="dash-discord" readonly>
-                        </div>
-                        <div class="field-group">
-                            <label for="dash-grado">Grado</label>
-                            <input type="text" id="dash-grado" readonly>
-                        </div>
-                        <div class="field-group">
-                            <label for="dash-mansione">Mansione</label>
-                            <input type="text" id="dash-mansione" readonly>
-                        </div>
-                        <div class="field-group">
-                            <label>Specializzazioni</label>
-                            <div>
-                                <span class="tag" id="dash-spec"><i class="fa-solid fa-shield"></i> Squadra Volante</span>
+                        <span style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 12px;">Turni aperti - aggiornamento live</span>
+                        
+                        <span style="font-size: 0.82rem; color: #94a3b8; display: block; margin-bottom: 15px;">1 operatore in servizio</span>
+
+                        <!-- LISTA OPERATORI ATTIVI -->
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <div style="background: #090d16; border: 1px solid #1e293b; border-radius: 8px; padding: 14px;">
+                                <div style="display: flex; align-items: center; gap: 8px; color: #f8fafc; font-weight: 700; font-size: 0.95rem;">
+                                    <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%; display: inline-block;"></span>
+                                    <span>Davide Esposito</span>
+                                </div>
+                                <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 6px; padding-left: 16px;">
+                                    Inizio 17:34<br>
+                                    <strong style="color: #22c55e; font-family: monospace; font-size: 0.95rem; display: inline-block; margin-top: 4px;">116:21:58</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </aside>
 
-                <section class="main-content">
-                    <div class="status-box">
-                        <div>
-                            <strong id="dash-status-grado">Grado</strong><br>
-                            <span style="font-size: 0.8rem; color: #64748b;" id="dash-status-user">Nome Cognome - @User</span>
-                        </div>
-                        <button class="btn btn-primary" id="btnUpdateProfile"><i class="fa-solid fa-rotate" id="iconUpdateProfile"></i> Aggiorna profilo / grado</button>
-                    </div>
+                </div>
+            </section>
 
-                    <div class="modules-grid">
-                        <div class="module-card">
-                            <i class="fa-regular fa-clock module-icon"></i>
-                            <h4>Timbra Cartellino</h4>
-                            <p>Avvia/termina turno e registra le ore</p>
-                        </div>
-                        <div class="module-card">
-                            <i class="fa-solid fa-id-card-clip module-icon"></i>
-                            <h4>Porto d'Armi & Licenze</h4>
-                            <p>Verifica e rilascio licenze armi</p>
-                        </div>
-                    </div>
-                </section>
-            </div>
         </main>
     </div>
 
@@ -237,5 +361,31 @@
 
     <!-- Script JS -->
     <script src="js/script.js"></script>
+    
+    <!-- PICCOLO LOGICA JS PER APRIRE E CHIUDERE LA SCHERMATA DEL CARTELLINO -->
+    <script>
+        const cardOpenCartellino = document.getElementById('cardOpenCartellino');
+        const mainDashboardView = document.getElementById('main-dashboard-view');
+        const cartellinoSection = document.getElementById('cartellino-section');
+        const btnBackToDash = document.getElementById('btnBackToDash');
+        const navHomeLink = document.getElementById('navHomeLink');
+
+        // Apri cartellino al click sulla scheda
+        if(cardOpenCartellino) {
+            cardOpenCartellino.addEventListener('click', () => {
+                mainDashboardView.style.display = 'none';
+                cartellinoSection.style.display = 'block';
+            });
+        }
+
+        // Ritorna alla Dashboard
+        function showDashboard() {
+            cartellinoSection.style.display = 'none';
+            mainDashboardView.style.display = 'block';
+        }
+
+        if(btnBackToDash) btnBackToDash.addEventListener('click', showDashboard);
+        if(navHomeLink) navHomeLink.addEventListener('click', (e) => { e.preventDefault(); showDashboard(); });
+    </script>
 </body>
 </html>
