@@ -72,6 +72,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Tasto Aggiorna Profilo
     const btnUpdateProfile = document.getElementById('btnUpdateProfile');
 
+    // --- CONTROLLO SESSIONE GIÀ ATTIVA (AUTO-LOGIN ALL'AGGIORNAMENTO PAGINA) ---
+    const sessioneSalvata = localStorage.getItem('mdc_utente_loggato');
+    if (sessioneSalvata) {
+        const agenteTrovato = agentiDatabase.find(a => a.username === sessioneSalvata);
+        if (agenteTrovato) {
+            utenteCorrente = agenteTrovato;
+            caricaDashboard(agenteTrovato);
+        }
+    }
+
     // MOSTRA / NASCONDI PASSWORD CON L'OCCHIO
     if (togglePassword && passwordInput) {
         togglePassword.addEventListener('click', function() {
@@ -99,6 +109,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (agenteTrovato) {
                 if (errorBox) errorBox.style.display = 'none';
                 utenteCorrente = agenteTrovato;
+                
+                // SALVA SESSIONE NEL BROWSER
+                localStorage.setItem('mdc_utente_loggato', agenteTrovato.username);
+                
                 caricaDashboard(agenteTrovato);
             } else {
                 if (errorBox) errorBox.style.display = 'block';
@@ -122,6 +136,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (btnConfirmLogout) {
         btnConfirmLogout.addEventListener('click', function() {
             if (modalLogout) modalLogout.style.display = 'none';
+            
+            // CANCELLA SESSIONE SALVATA
+            localStorage.removeItem('mdc_utente_loggato');
+            
             const dash = document.getElementById('dashboard-section');
             const login = document.getElementById('login-section');
             if (dash) dash.style.display = 'none';
@@ -205,14 +223,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // GESTIONE AVATAR E POSIZIONAMENTO
+    // GESTIONE AVATAR E POSIZIONAMENTO CON SALVATAGGIO PERMANENTE
     const btnEditAvatar = document.getElementById('btnEditAvatar');
     if (btnEditAvatar) {
         btnEditAvatar.addEventListener('click', function() {
             const nuovaUrl = prompt("Inserisci l'URL dell'immagine del tuo profilo:");
-            if (nuovaUrl && nuovaUrl.trim() !== "") {
+            if (nuovaUrl && nuovaUrl.trim() !== "" && utenteCorrente) {
+                const imgUrl = nuovaUrl.trim();
                 const img = document.getElementById('mieiDatiFoto');
-                if (img) img.src = nuovaUrl.trim();
+                if (img) img.src = imgUrl;
+
+                // Salva URL in localStorage per questo utente specifico
+                localStorage.setItem(`mdc_foto_${utenteCorrente.username}`, imgUrl);
             }
         });
     }
@@ -230,20 +252,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const posXInput = document.getElementById('mieiDatiFotoPosX');
     const posYInput = document.getElementById('mieiDatiFotoPosY');
 
-    if (posXInput) posXInput.addEventListener('input', applicaPosFoto);
-    if (posYInput) posYInput.addEventListener('input', applicaPosFoto);
+    if (posXInput) posXInput.addEventListener('input', applicaESalvaPosFoto);
+    if (posYInput) posYInput.addEventListener('input', applicaESalvaPosFoto);
 
     const btnResetPos = document.getElementById('btnResetPosFoto');
     if (btnResetPos) {
         btnResetPos.addEventListener('click', function() {
             if (posXInput) posXInput.value = 50;
             if (posYInput) posYInput.value = 30;
-            applicaPosFoto();
+            applicaESalvaPosFoto();
         });
     }
 });
 
-function applicaPosFoto() {
+// FUNZIONE PER APPLICARE E SALVARE LA POSIZIONE DELLA FOTO
+function applicaESalvaPosFoto() {
     const posX = document.getElementById('mieiDatiFotoPosX')?.value || 50;
     const posY = document.getElementById('mieiDatiFotoPosY')?.value || 30;
     const img = document.getElementById('mieiDatiFoto');
@@ -251,6 +274,11 @@ function applicaPosFoto() {
     if (img) {
         img.style.objectFit = 'cover';
         img.style.objectPosition = `${posX}% ${posY}%`;
+    }
+
+    if (utenteCorrente) {
+        localStorage.setItem(`mdc_fotopos_x_${utenteCorrente.username}`, posX);
+        localStorage.setItem(`mdc_fotopos_y_${utenteCorrente.username}`, posY);
     }
 }
 
@@ -298,10 +326,31 @@ function caricaDashboard(agente) {
     const dashStatusUser = document.getElementById('dash-status-user');
     if (dashStatusUser) dashStatusUser.innerText = `${agente.nome} ${agente.cognome} - @${agente.username}`;
     
-    // Avatar predefinito
+    // RESTIPULAZIONE FOTO E POSIZIONE SALVATE PER QUESTO UTENTE
     const fotoEl = document.getElementById('mieiDatiFoto');
+    const fotoSalvata = localStorage.getItem(`mdc_foto_${agente.username}`);
+
     if (fotoEl) {
-        fotoEl.src = `https://ui-avatars.com/api/?name=${agente.nome}+${agente.cognome}&background=0284c7&color=fff&size=180`;
+        if (fotoSalvata) {
+            fotoEl.src = fotoSalvata;
+        } else {
+            fotoEl.src = `https://ui-avatars.com/api/?name=${agente.nome}+${agente.cognome}&background=0284c7&color=fff&size=180`;
+        }
+    }
+
+    // Ripristino Cursori Posizione Foto
+    const posXSalvata = localStorage.getItem(`mdc_fotopos_x_${agente.username}`) || 50;
+    const posYSalvata = localStorage.getItem(`mdc_fotopos_y_${agente.username}`) || 30;
+
+    const posXInput = document.getElementById('mieiDatiFotoPosX');
+    const posYInput = document.getElementById('mieiDatiFotoPosY');
+
+    if (posXInput) posXInput.value = posXSalvata;
+    if (posYInput) posYInput.value = posYSalvata;
+
+    if (fotoEl) {
+        fotoEl.style.objectFit = 'cover';
+        fotoEl.style.objectPosition = `${posXSalvata}% ${posYSalvata}%`;
     }
 
     // Cambio schermata
