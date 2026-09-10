@@ -37,6 +37,22 @@ const agentiDatabase = [
 
 let utenteCorrente = null;
 
+// FUNZIONE PER CALCOLARE IL SALUTO IN BASE ALL'ORARIO
+function ottieniSalutoOrario() {
+    const ora = new Date().getHours();
+
+    if (ora >= 5 && ora < 12) {
+        return "Buongiorno";
+    } else if (ora >= 12 && ora < 17) {
+        return "Buon Pomeriggio";
+    } else if (ora >= 17 && ora <= 23) {
+        return "Buona Sera";
+    } else {
+        // Ora da 0 a 4
+        return "Buona Nottata";
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 
     const loginForm = document.getElementById('loginForm');
@@ -186,6 +202,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // POPOLA I DATI DELLA DASHBOARD CON L'UTENTE AUTENTICATO
 function caricaDashboard(agente) {
+    // Imposta il saluto dinamico
+    const saluto = ottieniSalutoOrario();
+    document.getElementById('dash-greeting').innerText = saluto;
+
     document.getElementById('dash-fullname').innerText = `${agente.nome} ${agente.cognome}`;
     document.getElementById('dash-card-name').innerText = `${agente.nome} ${agente.cognome}`;
     document.getElementById('dash-card-grado-sub').innerText = agente.grado;
